@@ -8,7 +8,7 @@
 
 # Basic Site Settings
 locale                   : "en-US"
-title                    : "Yang Qiao|Emory University "
+title                    : "Yang Qiao's Homepage "
 title_separator          : "-"
 name                     : &name "Yang Qiao"
 description              : &description "A first year Ph.D. student in CS at Emory University."
