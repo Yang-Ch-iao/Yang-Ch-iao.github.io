@@ -1,11 +1,12 @@
 ---
 permalink: /
-title: "Yang Qiao's Homepage"
+title: "About Me"
 author_profile: true
 redirect_from: 
   - /about/
   - /about.html
 ---
+
 
 I am currently a first-year PhD student in Computer Science at [Emory University](https://computerscience.emory.edu/index.html), under the guidance of [Dr. Liang Zhao](https://cs.emory.edu/~lzhao41/index.htm). My academic journey began at [Shandong University](https://en.sdu.edu.cn/), where I earned both my Master’s degree in Computer Science and my Bachelor’s degree in Physics. During my master’s program, I had the privilege of working with [Dr. Xuemeng Song](https://xuemengsong.github.io/), which solidified my passion for research in the field of computer science.
 
