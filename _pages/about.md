@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "Academic Pages is a ready-to-fork GitHub Pages template for academic personal websites"
+title: "Yang Qiao's Homepage"
 author_profile: true
 redirect_from: 
   - /about/
@@ -13,7 +13,7 @@ My research interests are rooted in machine learning and data mining, with a par
 
 Outside of my academic work, I enjoy playing badminton, exploring new restaurants, and traveling, which help me maintain a balanced and well-rounded life.
 
-I am actively looking for research scientist or applied scientist internship positions for Summer 2025. Feel free to reach out if there are any opportunities or if you share similar research interests and would like to collaborate.
+I am actively looking for *research scientist* or *applied scientist* internship positions for Summer 2025. Feel free to reach out if there are any opportunities or if you share similar research interests and would like to collaborate.
 
 
 <!-- 
