@@ -31,12 +31,11 @@ Work Experience
 
 Skills
 ======
-* Multimodal Sarcasm Detection
-* Model Development
-  * Attention Mechanisms
-  * FastRCNN for object detection
-  * Knowledge Graphs (ConceptNet5)
-* Pre-trained Models and Semi-supervised Learning
+* **Deep Learning Frameworks**: PyTorch, TensorFlow  
+* **Research Expertise**: Multimodal Learning, NLP, Computer Vision  
+* **Key Techniques**: Contrastive Learning, Semi-supervised Learning, Graph Neural Networks  
+* **Programming**: Python, C++  
+* **Tools**: Scikit-learn, Hugging Face, OpenCV  
 
 Publications
 ======
