@@ -2,7 +2,7 @@
 title: "Mutual-enhanced Incongruity Learning Network for Multi-modal Sarcasm Detection"
 collection: publications
 category: conferences
-permalink: /publication/2023-01-01-mutual-enhanced-incongruity
+permalink: /publication/2024-02-17-paper-title-number-4
 excerpt: 'This paper proposes a joint model for multi-modal sarcasm detection, utilizing local semantic-guided and global incongruity learning.'
 date: 2023-06-26
 venue: 'AAAI 2023 (Oral)'
