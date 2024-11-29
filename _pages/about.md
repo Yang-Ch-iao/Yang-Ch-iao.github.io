@@ -7,10 +7,9 @@ redirect_from:
   - /about.html
 ---
 
-======
 I am currently a first-year PhD student in Computer Science at [Emory University](https://computerscience.emory.edu/index.html), under the guidance of [Dr. Liang Zhao](https://cs.emory.edu/~lzhao41/index.htm). My academic journey began at [Shandong University](https://en.sdu.edu.cn/), where I earned both my Master’s degree in Computer Science and my Bachelor’s degree in Physics. During my master’s program, I had the privilege of working with [Dr. Xuemeng Song](https://xuemengsong.github.io/), which solidified my passion for research in the field of computer science.
 
-My research interests are rooted in machine learning and data mining, with a particular focus on natural language processing (NLP) and multi-modal tasks. I am eager to explore these areas further during my PhD studies, aiming to contribute to advancements in these dynamic fields.
+My research interests are rooted in machine learning and data mining, with a particular focus on multi-modal attribute graph. I am eager to explore these areas further during my PhD studies, aiming to contribute to advancements in these dynamic fields.
 
 Outside of my academic work, I enjoy playing badminton, exploring new restaurants, and traveling, which help me maintain a balanced and well-rounded life.
 
