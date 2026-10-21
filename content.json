@@ -1,0 +1,73 @@
+{
+  "name": "Yang Qiao",
+  "email": "yang.qiao@emory.edu",
+  "scholar": "https://scholar.google.com/citations?user=Q7E0HwwAAAAJ&hl=en",
+  "linkedin": "https://www.linkedin.com/in/yang-qiao1228",
+  "enterprise": "https://enterprisesaga-leaderboard.onrender.com/",
+  "publications": [
+    {
+      "title": "EnterpriseSaga: A Billion-Token Benchmark for Evidence Retrieval and Reasoning over Evolving Enterprise Knowledge",
+      "authors": "**Yang Qiao**, Xuchao Zhang, Liang Zhao, Bowen Zhu, and Hasibul Haque.",
+      "status": "Manuscript.",
+      "url": null,
+      "category": "agents",
+      "venue": "Manuscript"
+    },
+    {
+      "title": "Retrieval-Augmented Language Models for Matched Molecular Pair Transformations to Recapitulate Medicinal Chemistry Intuition",
+      "authors": "Bo Pan, **Yang Qiao**, Peter Zhiping Zhang, Hao-Wei Pang, Alex Zhu, Xiang Yu, Liying Zhang, and Liang Zhao.",
+      "status": "Findings of EMNLP 2026, accepted.",
+      "url": null,
+      "category": "science",
+      "venue": "EMNLP 2026"
+    },
+    {
+      "title": "Profile-Conditioned Latent Dynamics for Human Behavior Simulation",
+      "authors": "Ziyuan Qin, **Yang Qiao**, Summer B. Frandsen, Michael T. Treadway, and Liang Zhao.",
+      "status": "Manuscript.",
+      "url": null,
+      "category": "science",
+      "venue": "Manuscript"
+    },
+    {
+      "title": "XAI-Refine: An Automated Explanation-Knowledge Loop for Brain-Age Prediction",
+      "authors": "**Yang Qiao**, Junjie Wu, Deqiang Qiu, James J. Lah, and Liang Zhao.",
+      "status": "arXiv:2609.09388, 2026.",
+      "url": "https://arxiv.org/abs/2609.09388",
+      "category": "science",
+      "venue": "arXiv 2026"
+    },
+    {
+      "title": "MolWorld: Molecule World Models for Actionable Molecular Optimization",
+      "authors": "**Yang Qiao**, Bo Pan, Hao-Wei Pang, Peter Zhiping Zhang, Liying Zhang, and Liang Zhao.",
+      "status": "arXiv:2605.08954, 2026.",
+      "url": "https://arxiv.org/abs/2605.08954",
+      "category": "science",
+      "venue": "arXiv 2026"
+    },
+    {
+      "title": "Mutual-Enhanced Incongruity Learning Network for Multi-Modal Sarcasm Detection",
+      "authors": "**Yang Qiao**, Liqiang Jing, Xuemeng Song, Xiaolin Chen, Lei Zhu, and Liqiang Nie.",
+      "status": "AAAI 2023.",
+      "url": "https://ojs.aaai.org/index.php/AAAI/article/view/26138",
+      "category": "multimodal",
+      "venue": "AAAI 2023"
+    },
+    {
+      "title": "Multimodal Representation Learning Conditioned on Semantic Relations",
+      "authors": "**Yang Qiao**, Yuntong Hu, Bowen Zhu, Hasibul Haque, and Liang Zhao.",
+      "status": "arXiv:2508.17497, 2025; revised 2026.",
+      "url": "https://arxiv.org/abs/2508.17497",
+      "category": "multimodal",
+      "venue": "arXiv 2025"
+    },
+    {
+      "title": "Structural Disentanglement of Causal and Correlated Concepts",
+      "authors": "Qilong Zhao, Shiyu Wang, Zeeshan Memon, **Yang Qiao**, Guangji Bai, Bo Pan, Zhaohui Qin, and Liang Zhao.",
+      "status": "arXiv:2405.16219, revised 2025.",
+      "url": "https://arxiv.org/abs/2405.16219",
+      "category": "causal",
+      "venue": "arXiv 2024"
+    }
+  ]
+}
