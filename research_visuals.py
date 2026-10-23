@@ -2,27 +2,51 @@
 import math
 
 def molworld_figure():
-    # Three cohorts follow the visual grammar of MolWorld Fig. 1.
-    nodes = [
-        (197,158,0),(238,116,0),(281,161,0),(263,216,0),(209,225,0),
-        (135,110,1),(173,66,1),(247,57,1),(322,99,1),(349,175,1),
-        (322,250,1),(261,281,1),(157,271,1),(106,201,1),
-        (71,131,2),(109,54,2),(189,24,2),(294,28,2),(377,73,2),
-        (419,139,2),(403,241,2),(333,308,2),(210,328,2),(108,304,2)]
-    parents = {5:[0],6:[5,1],7:[1,6],8:[7,2],9:[2,8],10:[3,9],11:[3,4],12:[4,11],13:[0,5,12],14:[13,5],15:[5,6],16:[6,7],17:[7,8],18:[8,9],19:[9],20:[9,10],21:[10,11],22:[11,12],23:[12,13]}
-    starts = [0]*5 + [1.8+i*.48 for i in range(9)] + [7.0+i*.48 for i in range(10)]
-    lines=[]
-    for a,b in [(0,1),(1,2),(2,3),(3,4),(4,0),(0,2)]:
-        x,y,_=nodes[a];xx,yy,_=nodes[b]
-        lines.append(f'<path class="mw-initial-edge" d="M{x} {y}L{xx} {yy}"/>')
-    for child,ps in parents.items():
-        x,y,g=nodes[child]
-        for parent in ps:
-            xx,yy,_=nodes[parent]
-            lines.append(f'<path class="mw-growing-edge" data-at="{starts[child]:.2f}" pathLength="1" d="M{xx} {yy}L{x} {y}" style="stroke-dasharray:1;stroke-dashoffset:0"/>')
+    # One illustrative context per round; the method may select multiple contexts.
+    # Accepted candidates have a verified edge to the graph as it existed BEFORE that round.
+    nodes = [(70,180),(100,110),(145,70),(190,120),(230,75),(275,130),
+             (240,200),(180,230),(115,235),(285,260),(350,210),(345,125),
+             (75,40),(200,25),(325,38),(400,88),(407,287),
+             (30,100),(45,287),(180,330),(355,315),(430,185)]
+    initial_edges = [(0,1),(1,2),(2,3),(3,4),(4,5),(1,3),(3,6),
+                     (6,7),(7,8),(8,0),(6,9),(9,10),(10,11),(11,5)]
+    anchor_sets = [{1,2,3,4,5}, {0,1,7,8,12}]
+    verified_edges = {1:[(1,12),(4,13),(11,14),(11,15),(10,15),(14,15)],
+                      2:[(12,17),(1,17),(8,18),(7,19),(9,19),(9,20),(10,20),(19,20)]}
+    rejected = {16,21}
+    def edge(a,b,classes,round_num=0):
+        x,y=nodes[a];xx,yy=nodes[b]
+        return f'<path class="{classes}" data-round="{round_num}" data-from="{a}" data-to="{b}" pathLength="1" d="M{x} {y}L{xx} {yy}"/>'
+    lines = [edge(a,b,'mw-initial-edge') for a,b in initial_edges]
+    for r,pairs in verified_edges.items():
+        lines += [edge(a,b,'mw-verified-edge',r) for a,b in pairs]
+    # Highlight only actual edges inside the chosen connected five-node context.
+    anchor_edges=[]
+    all_edges=initial_edges+verified_edges[1]
+    for r,selected in enumerate(anchor_sets,1):
+        anchor_edges += [edge(a,b,'mw-anchor-edge',r) for a,b in all_edges if a in selected and b in selected]
     dots=[]
-    for i,(x,y,g) in enumerate(nodes):
-        dots.append(f'<g class="mw-node cohort-{g}" data-at="{starts[i]+(.38 if g else 0):.2f}" transform="translate({x} {y})"><title>{["Original molecule","Earlier-generated molecule","Later-generated molecule"][g]}</title><circle r="6.3"/></g>')
+    for i,(x,y) in enumerate(nodes):
+        r=0 if i<12 else 1 if i<17 else 2
+        classes='mw-node '+('mw-existing' if r==0 else 'mw-candidate')+(' mw-rejected' if i in rejected else '')
+        title='Existing molecule' if r==0 else 'Candidate with no verified link; not incorporated' if i in rejected else 'Generated candidate; incorporated only after MMP verification'
+        dots.append(f'<g class="{classes}" data-node="{i}" data-round="{r}" transform="translate({x} {y})"><title>{title}</title><circle class="mw-dot" r="6.5"/>')
+        for ar,selected in enumerate(anchor_sets,1):
+            if i in selected: dots.append(f'<circle class="mw-anchor-ring" data-round="{ar}" r="11"/>')
+        if i in rejected:dots.append('<path class="mw-reject-mark" d="M-3-3L3 3M-3 3L3-3"/>')
+        dots.append('</g>')
+    # Periodic Catmull–Rom contours keep the boundary smooth at every junction.
+    def contour(points):
+        segments=[]
+        for i,p1 in enumerate(points):
+            p0=points[(i-1)%len(points)];p2=points[(i+1)%len(points)];p3=points[(i+2)%len(points)]
+            c1=(p1[0]+(p2[0]-p0[0])/6,p1[1]+(p2[1]-p0[1])/6)
+            c2=(p2[0]-(p3[0]-p1[0])/6,p2[1]-(p3[1]-p1[1])/6)
+            segments.append(f'C{c1[0]:.2f} {c1[1]:.2f} {c2[0]:.2f} {c2[1]:.2f} {p2[0]} {p2[1]}')
+        return f'M{points[0][0]} {points[0][1]}'+''.join(segments)+'Z'
+    contours=[contour([(55,145),(88,82),(171,47),(264,57),(342,96),(373,174),(338,254),(247,286),(147,271),(75,234)]),
+              contour([(40,130),(59,39),(166,3),(289,11),(397,51),(427,141),(389,238),(302,291),(187,301),(78,264)]),
+              contour([(10,123),(42,35),(155,-6),(287,0),(408,41),(455,149),(410,290),(319,352),(179,366),(52,322),(7,236)])]
     def structure(y,variable):
         ring=' '.join(f'{526+20*math.cos(k*math.pi/3):.1f},{y+20*math.sin(k*math.pi/3):.1f}' for k in range(6))
         return f'''<rect x="495" y="{y-38}" width="165" height="70" rx="23" fill="#e8efec"/>
@@ -31,21 +55,21 @@ def molworld_figure():
         <path d="M546 {y}L563 {y}M580 {y}H603M603 {y}L624 {y}M601 {y-4}V{y-22}M605 {y-4}V{y-22}" stroke="#425650" stroke-width="1.5" fill="none"/>
         <text x="572" y="{y+4}" text-anchor="middle" class="chem">NH</text><text x="603" y="{y-27}" text-anchor="middle" class="chem">O</text>
         <circle cx="641" cy="{y}" r="21" fill="{('#f2ddd4' if variable=='H' else '#e5e2f2')}"/><text x="641" y="{y+5}" text-anchor="middle" class="chem">{variable}</text>'''
-    return f'''<svg viewBox="0 0 730 388" class="molworld-svg" role="img" aria-labelledby="mw-title mw-desc">
-    <title id="mw-title">Molecule-transfer graph expansion</title><desc id="mw-desc">Adapted from Figure 1 of MolWorld. Blue outlined original molecules are joined by earlier-generated and later-generated molecules through MMP relations. New molecules stay connected to the original series. The inset illustrates a shared chemical scaffold with a local H-to-methyl substitution.</desc>
-    <defs><linearGradient id="mw-property" gradientUnits="userSpaceOnUse" x1="77" y1="372" x2="400" y2="372"><stop stop-color="#efcf89"/><stop offset="1" stop-color="#c76c56"/></linearGradient><marker id="mw-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#b76c55"/></marker><marker id="mw-property-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#c76c56"/></marker></defs>
-    <g transform="translate(0 14) scale(.96)">
-    <path class="mw-field mw-field-late" d="M48 150Q45 108 78 89Q74 30 123 29Q153 3 196 8Q235 0 278 9Q326-5 345 36Q400 33 405 79Q451 105 438 163Q460 215 421 250Q411 295 359 302Q329 348 275 330Q227 366 183 340Q127 353 106 322Q58 321 65 268Q22 236 44 199Z"/>
-    <path class="mw-field mw-field-early" d="M85 168Q83 119 125 95Q137 42 187 47Q221 24 261 42Q305 31 332 73Q377 97 365 141Q399 194 360 231Q365 278 310 284Q275 319 225 300Q173 316 147 289Q92 278 101 235Q68 214 85 168Z"/>
-    <path class="mw-field mw-field-initial" d="M169 174Q166 135 201 124Q220 91 251 105Q286 106 294 144Q320 174 292 205Q293 239 256 242Q223 265 196 240Q168 225 179 201Z"/>
-    {''.join(lines)}{''.join(dots)}
-    <ellipse cx="335" cy="138" rx="30" ry="55" transform="rotate(-25 335 138)" class="mw-detail-ring"/><path d="M367 124L488 95" class="mw-detail-guide"/>
+    return f'''<svg viewBox="0 0 730 425" class="molworld-svg" role="img" aria-labelledby="mw-title mw-desc">
+    <title id="mw-title">Select a connected context, generate a batch, then verify its connections</title><desc id="mw-desc">Two illustrative rounds. Five connected molecules are selected from the current graph as an anchor context. Multiple candidates are sampled together without predetermined edges. MMP verification determines their links, including links to existing molecules outside the anchor and links between accepted candidates. Candidates without a verified connection to the current graph are not incorporated. A new five-node context can include previously accepted molecules.</desc>
+    <defs><linearGradient id="mw-field-base" x2="1" y2="1"><stop stop-color="#f8f2e7"/><stop offset="1" stop-color="#f2e8d5"/></linearGradient><linearGradient id="mw-field-one" x2="1" y2="1"><stop stop-color="#f4ead7"/><stop offset="1" stop-color="#e9d8bd"/></linearGradient><linearGradient id="mw-field-two" x2="1" y2="1"><stop stop-color="#f2e5de"/><stop offset="1" stop-color="#e6cfc3"/></linearGradient><marker id="mw-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#7f9084"/></marker></defs>
+    <g class="mw-graph" transform="translate(6 28) scale(.96)">
+    <path class="mw-region mw-region-2" d="{contours[2]}"/><path class="mw-region mw-region-1" d="{contours[1]}"/><path class="mw-region mw-region-0" d="{contours[0]}"/>
+    {''.join(lines)}{''.join(anchor_edges)}{''.join(dots)}
     </g>
-    <g class="mw-inset"><text x="490" y="35" class="figure-heading">What does an edge mean?</text><text x="490" y="57" class="figure-small">A local structural modification</text>
-    {structure(116,'H')}{structure(218,'CH₃')}
-    <path d="M575 155V173" stroke="#5d6965" marker-end="url(#mw-arrow)"/><text x="585" y="169" class="figure-small">H → CH₃</text>
-    <text x="490" y="276" class="figure-small">Shared scaffold, changed fragment.</text><text x="490" y="295" class="figure-small">MMP = matched molecular pair.</text></g>
-    <path d="M77 372H400" stroke="url(#mw-property)" stroke-width="5" marker-end="url(#mw-property-arrow)"/><text x="239" y="361" text-anchor="middle" class="figure-small">Exploration toward higher-property regions</text>
+    <text x="24" y="18" class="figure-small">Current molecule-transfer graph</text>
+    <text x="24" y="405" class="figure-small mw-graph-caption">Verified connections determine the expansion.</text>
+    <g class="mw-inset"><text x="490" y="43" class="figure-heading">What does an edge mean?</text><text x="490" y="65" class="figure-small">A verified local structural modification</text>
+    {structure(124,'H')}{structure(226,'CH₃')}
+    <path d="M575 163V181" stroke="#5d6965" marker-end="url(#mw-arrow)"/><text x="585" y="177" class="figure-small">H → CH₃</text>
+    <text x="490" y="284" class="figure-small">Shared scaffold, changed fragment.</text><text x="490" y="303" class="figure-small">MMP = matched molecular pair.</text>
+    <path d="M491 335H522" stroke="#758a7e" stroke-width="1.4"/><text x="533" y="339" class="figure-small">Verified MMP connection</text>
+    <circle cx="506" cy="365" r="6.5" fill="white" stroke="#8d9891" stroke-dasharray="2 2"/><text x="533" y="369" class="figure-small">Candidate awaiting verification</text></g>
     </svg>'''
 
 ENTERPRISE = '''<div class="evidence-figure" role="img" aria-label="The Northstar example from EnterpriseSaga Figure 1: Salesforce identifies the billing update, Slack explains retry charges, and email confirms the resolution; similar records do not answer the same question.">

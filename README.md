@@ -34,11 +34,11 @@ EnterpriseSaga and Profile-Conditioned Latent Dynamics are listed as manuscripts
 Research figures are redrawn from the papers rather than generic animations:
 
 - **EnterpriseSaga:** a static evidence chain based on the Northstar billing example in Figure 1.
-- **MolWorld:** Figure 1's expanding molecule-transfer graph, with original, earlier-generated, and later-generated cohorts. Nodes are whole molecules; edges are MMP relations. The H-to-methyl inset illustrates a local structural modification, not a synthesis reaction. Graph coordinates and animation timing are schematic.
+- **MolWorld:** A smooth-contour graph with two illustrative rounds following Figure 1 and Section 3.2: select five connected molecules from the current graph, sample multiple candidates together, verify their MMP links, and incorporate connected candidates. Links are not prescribed by conditioning and may reach existing molecules outside the selected context. An unconnected candidate is excluded in each round; the second anchor includes a molecule accepted in the first round. Nodes are whole molecules; edges are MMP relations. The H-to-methyl inset illustrates a local structural modification, not a synthesis reaction. Graph coordinates, batch sizes, and animation timing are schematic. Every accepted candidate has a verified edge to the graph that existed before its generation round.
 - **RCML:** a static comparison of fixed and relation-conditioned representation spaces, based on Figure 1.
 - **XAI-Refine:** the explanation, literature verification, constrained revision, and validation loop.
 - **Profile-conditioned latent dynamics:** training supervision from observed transitions versus inference from the profile and current context.
 
-MolWorld pauses offscreen and when the tab is hidden, supports pause/replay, and shows the completed graph by default for reduced-motion preferences. All research figures and core content remain readable without JavaScript.
+MolWorld pauses offscreen and when the tab is hidden, supports pause/replay and a step-by-step control, and shows the completed graph by default for reduced-motion preferences. All research figures and core content remain readable without JavaScript.
 
 The previous AcademicPages source is retained for recovery and reference, but is not used to generate the new homepage. The original theme license remains in `LICENSE`.
