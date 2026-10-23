@@ -143,12 +143,11 @@ XAI = '''<svg viewBox="0 0 510 280" class="support-svg xai-loop" role="img" aria
 <g class="xai-step"><rect x="120" y="220" width="130" height="54" rx="7"/><text x="185" y="242" class="xai-step-title">03 · Regularize</text><text x="185" y="259" class="xai-step-detail">Constrain the same Φⱼ</text></g>
 <g class="xai-step xai-validation"><rect x="2" y="118" width="120" height="54" rx="7"/><text x="67" y="140" class="xai-step-title">04 · Refine</text><text x="67" y="157" class="xai-step-detail">Retrain · re-check Φⱼ</text></g>
 <g class="xai-central-model"><rect x="35" y="9" width="110" height="72" rx="9"/><text x="90" y="29" class="xai-model-name">Brain-age model</text><text x="90" y="51" class="xai-model">fₜ → fₜ₊₁</text><text x="90" y="69" class="xai-center-note">Accepted update</text></g>
-<g class="xai-shared-operator"><title>The same explanatory variable and measurement operator are preserved from discovery through refinement and re-evaluation. A compatible differentiable surrogate is used for training when needed.</title>
-<text x="180" y="113" class="xai-shared-kicker">SAME MEASUREMENT</text>
-<text x="180" y="143" class="xai-shared-symbol">Φⱼ</text>
-<text x="180" y="164" class="xai-shared-copy">Explain · constrain</text>
-<text x="180" y="179" class="xai-shared-copy">· re-evaluate</text>
-<path d="M155 192H205" class="xai-shared-rule"/>
+<g class="xai-shared-operator"><title>Dashed links mark the same explanatory variable and measurement operator shared by Explain, Regularize, and Refine; they are not additional process-flow arrows.</title>
+<path class="xai-shared-link" d="M239 78V84C239 98 185 88 185 108V214M128 145H185"/>
+<g class="xai-shared-ports"><circle cx="239" cy="78" r="2"/><circle cx="128" cy="145" r="2"/><circle cx="185" cy="214" r="2"/></g>
+<rect class="xai-shared-label-bg" x="139" y="132" width="92" height="26" rx="13"/>
+<text x="185" y="149" class="xai-shared-label">Same operator Φⱼ</text>
 </g>
 <g class="xai-corpus"><title>Domain corpus: scientific literature retrieved to verify model claims</title><path d="M412 116C412 104 502 104 502 116V165C502 177 412 177 412 165Z"/><path class="xai-corpus-rim" d="M412 116C412 128 502 128 502 116"/><text x="457" y="143">Domain corpus</text><text x="457" y="159" class="xai-corpus-detail">Scientific literature</text></g>
 <path class="xai-corpus-link" d="M368 134H407" marker-end="url(#xai-loop-arrow)"/>

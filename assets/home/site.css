@@ -177,8 +177,8 @@ section{padding:28px 0}.section-heading{margin-bottom:17px}h2{font-size:23px}.se
 .molworld-svg .mw-candidate.rejected .mw-dot{fill:#f4ece6!important;stroke:#b99c90!important}
 .mw-dot{transition:fill .3s,stroke .3s}
 
-/* Shared measurement operator: the invariant linking discovery and correction. */
-.xai-loop .xai-shared-kicker{font:600 7.5px var(--sans);letter-spacing:.55px;fill:#7185a1}
-.xai-loop .xai-shared-symbol{font:italic 27px Georgia,serif;fill:#527298}
-.xai-loop .xai-shared-copy{font:10px var(--sans);fill:#61758f}
-.xai-shared-rule{stroke:#d3deeb;stroke-width:1;stroke-linecap:round}
+/* Internal dashed links denote a shared operator, separate from process flow. */
+.xai-shared-link{fill:none;stroke:#a9b9cd;stroke-width:1.35;stroke-dasharray:2.5 3.5;stroke-linecap:round;stroke-linejoin:round}
+.xai-shared-ports circle{fill:#fbfcfe;stroke:#a9b9cd;stroke-width:1.2}
+.xai-shared-label-bg{fill:#f6f9fd;stroke:#d6e0ed;stroke-width:1}
+.xai-loop .xai-shared-label{font:500 9.5px var(--sans);fill:#597493}
