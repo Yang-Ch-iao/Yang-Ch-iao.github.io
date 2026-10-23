@@ -62,7 +62,6 @@ def molworld_figure():
     <path class="mw-region mw-region-2" d="{contours[2]}"/><path class="mw-region mw-region-1" d="{contours[1]}"/><path class="mw-region mw-region-0" d="{contours[0]}"/>
     {''.join(lines)}{''.join(anchor_edges)}{''.join(dots)}
     </g>
-    <text x="24" y="18" class="figure-small">Current molecule-transfer graph</text>
     <rect x="145" y="408" width="174" height="6" fill="url(#mw-property-reference)"/><path d="M315 411H330" stroke="#ce2b1d" stroke-width="6" marker-end="url(#mw-property-tip)"/><text x="237" y="432" text-anchor="middle" class="figure-small">Higher property</text>
     <g class="mw-inset"><text x="490" y="43" class="figure-heading">What does an edge mean?</text><text x="490" y="65" class="figure-small">A verified local structural modification</text>
     {structure(124,'H')}{structure(226,'CH₃')}
