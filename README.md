@@ -43,7 +43,7 @@ RCML supports automatic or manual relation switching and reduced-motion preferen
 
 The previous AcademicPages source is retained for recovery and reference, but is not used to generate the new homepage. The original theme license remains in `LICENSE`.
 
-Research cards are grouped by direction: EnterpriseSaga under 01; MolWorld and XAI-Refine under 02; RCML and MILNet under 03. XAI-Refine shows a closed loop with an animated flow marker; the feedback arrow represents accepted updates only. Its Pause control and reduced-motion behavior preserve a readable static loop. MILNet displays the complete case-study Figure 3 from the paper at its intrinsic 1380:638 aspect ratio, with a full-resolution image link. The two cases demonstrate complementary local/global strengths.
+Research cards are grouped by direction: EnterpriseSaga under 01; MolWorld and XAI-Refine under 02; RCML and MILNet under 03. XAI-Refine shows a closed loop with an animated flow marker; the feedback arrow represents accepted updates only. Its Pause control and reduced-motion behavior preserve a readable static loop. MILNet leads with complementary local/global views and correct-prediction-gated mutual learning. Two proportional photo crops from Figure 3 support a newly typeset outcome table; these are the paper’s case outcomes, not an aggregate accuracy claim. Each research card explains how to read its adjacent demonstration.
 
 Profile-conditioned latent dynamics remains in the complete publication list, but is not a featured research card.
 
