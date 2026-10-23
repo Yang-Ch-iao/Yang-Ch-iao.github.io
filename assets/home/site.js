@@ -109,3 +109,6 @@ xaiToggle.addEventListener('click',()=>{xaiPaused=!xaiPaused;syncXaiLoop();});
 new IntersectionObserver(entries=>{xaiVisible=entries[0].isIntersecting;syncXaiLoop();},{threshold:.15}).observe(xaiCard);
 document.addEventListener('visibilitychange',syncXaiLoop);
 reducedMotion.addEventListener('change',()=>{if(reducedMotion.matches)xaiPaused=true;syncXaiLoop();});syncXaiLoop();
+
+// Jump from a research direction to its papers in the full publication list.
+document.querySelectorAll('[data-publication-filter]').forEach(link=>link.addEventListener('click',()=>{const button=filters.find(button=>button.dataset.filter===link.dataset.publicationFilter);if(button)button.click();}));

@@ -43,6 +43,8 @@ RCML supports automatic or manual relation switching and reduced-motion preferen
 
 The previous AcademicPages source is retained for recovery and reference, but is not used to generate the new homepage. The original theme license remains in `LICENSE`.
 
-Research cards are grouped by direction: EnterpriseSaga under 01; MolWorld and XAI-Refine under 02; RCML and MILNet under 03. XAI-Refine shows a closed loop with an animated flow marker; the feedback arrow represents accepted updates only. Its Pause control and reduced-motion behavior preserve a readable static loop. MILNet has its own card, showing local/global incongruity learning and screened bidirectional transfer from Figure 2.
+Research cards are grouped by direction: EnterpriseSaga under 01; MolWorld and XAI-Refine under 02; RCML and MILNet under 03. XAI-Refine shows a closed loop with an animated flow marker; the feedback arrow represents accepted updates only. Its Pause control and reduced-motion behavior preserve a readable static loop. MILNet uses the crowded-bus example from Figure 1 to introduce local/global incongruity, followed by screened bidirectional learning. The original example is preserved in images/research/milnet-example.png and framed with an SVG viewport.
 
 Profile-conditioned latent dynamics remains in the complete publication list, but is not a featured research card.
+
+The XAI-Refine science-papers link jumps to Publications and activates the AI for science filter. Figure provenance remains documented here rather than in visitor-facing production captions.
