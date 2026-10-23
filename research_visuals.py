@@ -135,14 +135,21 @@ def xai_loop_connections():
 <path class="xai-track" d="{route}" mask="url(#xai-loop-gaps)"/>{''.join(arrows)}
 <g mask="url(#xai-loop-gaps)"><circle class="xai-flow-dot" r="2.5" style="offset-path:path('{route}')"/></g>'''
 
-XAI = '''<svg viewBox="0 0 510 280" class="support-svg xai-loop" role="img" aria-labelledby="xai-title xai-desc"><title id="xai-title">XAI-Refine: a closed explanation–knowledge loop</title><desc id="xai-desc">Extract reliable explanations, verify them against literature, derive a minimal revision and training constraint, then validate the candidate model. Refine updates the brain-age model only after validation; the updated model then feeds Explain for the next iteration. There is no direct Refine-to-Explain shortcut.</desc>
+XAI = '''<svg viewBox="0 0 510 280" class="support-svg xai-loop" role="img" aria-labelledby="xai-title xai-desc"><title id="xai-title">XAI-Refine: a closed explanation–knowledge loop</title><desc id="xai-desc">Extract reliable explanations, verify them against literature, derive a minimal revision and training constraint, then validate the candidate model. Refine updates the brain-age model only after validation; the updated model then feeds Explain for the next iteration. The same explanatory variable and measurement operator are retained for explanation, regularization, and validation; compatible differentiable surrogates are used for training when required.</desc>
 <defs><marker id="xai-loop-arrow" viewBox="0 0 5 5" refX="5" refY="2.5" markerUnits="userSpaceOnUse" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L5 2.5L0 5Z" fill="#8798b0"/></marker></defs>
 <!--xai-connections-->
-<g class="xai-step"><rect x="215" y="18" width="120" height="54" rx="7"/><text x="275" y="40" class="xai-step-title">01 · Explain</text><text x="275" y="57" class="xai-step-detail">Model-side claims</text></g>
+<g class="xai-step"><rect x="215" y="18" width="120" height="54" rx="7"/><text x="275" y="40" class="xai-step-title">01 · Explain</text><text x="275" y="57" class="xai-step-detail">Measure with Φⱼ</text></g>
 <g class="xai-step"><rect x="238" y="118" width="130" height="54" rx="7"/><text x="303" y="140" class="xai-step-title">02 · Verify claims</text><text x="303" y="157" class="xai-step-detail">Model ↔ domain claims</text></g>
-<g class="xai-step"><rect x="120" y="220" width="130" height="54" rx="7"/><text x="185" y="242" class="xai-step-title">03 · Regularize</text><text x="185" y="259" class="xai-step-detail">Minimal revision → Rₜ</text></g>
-<g class="xai-step xai-validation"><rect x="2" y="118" width="120" height="54" rx="7"/><text x="67" y="140" class="xai-step-title">04 · Refine</text><text x="67" y="157" class="xai-step-detail">Retrain + validate</text></g>
+<g class="xai-step"><rect x="120" y="220" width="130" height="54" rx="7"/><text x="185" y="242" class="xai-step-title">03 · Regularize</text><text x="185" y="259" class="xai-step-detail">Constrain the same Φⱼ</text></g>
+<g class="xai-step xai-validation"><rect x="2" y="118" width="120" height="54" rx="7"/><text x="67" y="140" class="xai-step-title">04 · Refine</text><text x="67" y="157" class="xai-step-detail">Retrain · re-check Φⱼ</text></g>
 <g class="xai-central-model"><rect x="35" y="9" width="110" height="72" rx="9"/><text x="90" y="29" class="xai-model-name">Brain-age model</text><text x="90" y="51" class="xai-model">fₜ → fₜ₊₁</text><text x="90" y="69" class="xai-center-note">Accepted update</text></g>
+<g class="xai-shared-operator"><title>The same explanatory variable and measurement operator are preserved from discovery through refinement and re-evaluation. A compatible differentiable surrogate is used for training when needed.</title>
+<text x="180" y="113" class="xai-shared-kicker">SAME MEASUREMENT</text>
+<text x="180" y="143" class="xai-shared-symbol">Φⱼ</text>
+<text x="180" y="164" class="xai-shared-copy">Explain · constrain</text>
+<text x="180" y="179" class="xai-shared-copy">· re-evaluate</text>
+<path d="M155 192H205" class="xai-shared-rule"/>
+</g>
 <g class="xai-corpus"><title>Domain corpus: scientific literature retrieved to verify model claims</title><path d="M412 116C412 104 502 104 502 116V165C502 177 412 177 412 165Z"/><path class="xai-corpus-rim" d="M412 116C412 128 502 128 502 116"/><text x="457" y="143">Domain corpus</text><text x="457" y="159" class="xai-corpus-detail">Scientific literature</text></g>
 <path class="xai-corpus-link" d="M368 134H407" marker-end="url(#xai-loop-arrow)"/>
 <path class="xai-corpus-link" d="M412 157H373" marker-end="url(#xai-loop-arrow)"/>

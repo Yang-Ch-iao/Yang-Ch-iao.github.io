@@ -176,3 +176,9 @@ section{padding:28px 0}.section-heading{margin-bottom:17px}h2{font-size:23px}.se
 .molworld-svg .mw-candidate.incorporated .mw-dot,.molworld-svg:not(.has-motion) .mw-candidate:not(.mw-rejected) .mw-dot{fill:#fff!important;stroke:#535353!important;stroke-dasharray:none}
 .molworld-svg .mw-candidate.rejected .mw-dot{fill:#f4ece6!important;stroke:#b99c90!important}
 .mw-dot{transition:fill .3s,stroke .3s}
+
+/* Shared measurement operator: the invariant linking discovery and correction. */
+.xai-loop .xai-shared-kicker{font:600 7.5px var(--sans);letter-spacing:.55px;fill:#7185a1}
+.xai-loop .xai-shared-symbol{font:italic 27px Georgia,serif;fill:#527298}
+.xai-loop .xai-shared-copy{font:10px var(--sans);fill:#61758f}
+.xai-shared-rule{stroke:#d3deeb;stroke-width:1;stroke-linecap:round}
