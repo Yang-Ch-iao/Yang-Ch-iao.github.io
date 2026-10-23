@@ -120,7 +120,7 @@ XAI = '''<svg viewBox="0 0 510 280" class="support-svg xai-loop" role="img" aria
 <g class="xai-step xai-validation"><rect x="2" y="112" width="120" height="54" rx="7"/><text x="67" y="134" class="xai-step-title">04 · Refine</text><text x="67" y="151" class="xai-step-detail">Retrain + validate</text></g>
 <g class="xai-central-model"><rect x="138" y="98" width="90" height="80" rx="9"/><text x="183" y="118" class="xai-model-name">Brain-age model</text><text x="183" y="143" class="xai-model">fₜ → fₜ₊₁</text><text x="183" y="162" class="xai-center-note">Accepted update</text></g>
 <path class="xai-model-route" d="M183 98V60M122 139H137" marker-end="url(#xai-return-arrow)"/>
-<text x="26" y="68" class="xai-return-label">Next iteration</text>
+<text x="8" y="40" class="xai-return-label">Next iteration</text>
 <g class="xai-corpus"><title>Domain corpus: scientific literature retrieved to verify model claims</title><path d="M412 116C412 104 502 104 502 116V165C502 177 412 177 412 165Z"/><path class="xai-corpus-rim" d="M412 116C412 128 502 128 502 116"/><text x="457" y="143">Domain corpus</text><text x="457" y="159" class="xai-corpus-detail">Scientific literature</text></g>
 <path class="xai-corpus-link" d="M368 128H412M412 151H368" marker-end="url(#xai-loop-arrow)"/>
 <text x="390" y="121" class="xai-evidence-label">Query</text><text x="390" y="166" class="xai-evidence-label">Evidence</text>
