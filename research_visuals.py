@@ -72,11 +72,16 @@ def molworld_figure():
     <circle cx="506" cy="365" r="6.5" fill="white" stroke="#8d9891" stroke-dasharray="2 2"/><text x="533" y="369" class="figure-small">Candidate awaiting verification</text></g>
     </svg>'''
 
-ENTERPRISE = '''<div class="evidence-figure" role="img" aria-label="The Northstar example from EnterpriseSaga Figure 1: Salesforce identifies the billing update, Slack explains retry charges, and email confirms the resolution; similar records do not answer the same question.">
-<div class="case-heading">A question across systems and time</div>
-<p class="case-question">What caused Northstar’s duplicate charges, and how were they resolved?</p>
-<ol class="evidence-chain"><li><div class="record-meta">SALESFORCE <span>May 6</span></div><strong>Identify the update</strong><p>Duplicate charges linked to the May billing update.</p></li><li><div class="record-meta">SLACK <span>May 7</span></div><strong>Establish the cause</strong><p>Automatic retries charged the customer twice.</p></li><li><div class="record-meta">EMAIL <span>May 9</span></div><strong>Confirm the outcome</strong><p>Retries disabled; refunds issued.</p></li></ol>
-<div class="competing-records"><span>RELATED, BUT DIFFERENT</span><p><b>Same customer:</b> an earlier invoice-layout issue.</p><p><b>A proposal:</b> manual review, not the final resolution.</p></div>
+ENTERPRISE = '''<div class="es-case" aria-label="Northstar evidence example from EnterpriseSaga Figure 1">
+<div class="es-kicker"><span>ACROSS SYSTEMS &amp; TIME</span><span class="es-account">Northstar</span></div>
+<p class="es-question">What caused the duplicate charges,<br class="es-question-break"> and how were they resolved?</p>
+<ol class="es-records" aria-label="Evidence in chronological order">
+<li><div class="es-source"><span class="es-source-icon" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M5.5 15h9a3.5 3.5 0 0 0 .4-7 5 5 0 0 0-9.6-1A4 4 0 0 0 5.5 15Z"/></svg></span><span>Salesforce</span><span class="es-ref">1</span></div><time class="es-date">MAY 06</time><h4>Billing update</h4><p>Duplicate charges linked to the May billing update.</p></li>
+<li><div class="es-source"><span class="es-source-icon" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M7 3 5 17M15 3l-2 14M3 7h14M3 13h14"/></svg></span><span>Slack</span><span class="es-ref">2</span></div><time class="es-date">MAY 07</time><h4>Retry charges</h4><p>Automatic retries charged the customer twice.</p></li>
+<li><div class="es-source"><span class="es-source-icon" aria-hidden="true"><svg viewBox="0 0 20 20"><rect x="2.5" y="4.5" width="15" height="11" rx="2"/><path d="m3 5 7 6 7-6"/></svg></span><span>Email</span><span class="es-ref">3</span></div><time class="es-date">MAY 09</time><h4>Resolution</h4><p>Retries disabled;<br>refunds issued.</p></li>
+</ol>
+<div class="es-answer"><div class="es-answer-label"><span aria-hidden="true">↳</span> EVIDENCE-GROUNDED ANSWER</div><p>Automatic retries caused duplicate charges <span class="es-cite">2</span>. Retries were disabled and refunds issued <span class="es-cite">3</span>.</p></div>
+<div class="es-distractors"><div class="es-distractor-label">SIMILAR RECORDS · DIFFERENT CONTEXT</div><div class="es-decoys"><p><span>Earlier issue</span>Invoice-layout changes</p><p><span>Proposal only</span>Manual review</p></div></div>
 </div>'''
 
 def rcml_figure():
