@@ -11,7 +11,8 @@ A static academic homepage, served by GitHub Pages from the root of the `master`
 - **CV:** replace `files/Yang_Qiao_CV.pdf` and `files/Yang_Qiao_CV.docx`.
 - **Photograph:** replace `images/profile.jpg`. Cropping is controlled by `.portrait-frame` in `assets/home/site.css`.
 - **Design:** edit `assets/home/site.css`.
-- **Interactive diagrams and publication filters:** edit `assets/home/site.js`.
+- **Paper figures:** edit `research_visuals.py`, then run `python3 build_home.py`.
+- **MolWorld animation and publication filters:** edit `assets/home/site.js`.
 
 Commit both source changes and the regenerated `index.html`, then push to `master`. GitHub Pages publishes the result automatically. Existing `/publications/`, `/portfolio/`, `/teaching/`, and `/cv/` links redirect to the appropriate content.
 
@@ -30,6 +31,14 @@ EnterpriseSaga and Profile-Conditioned Latent Dynamics are listed as manuscripts
 
 ## Interaction notes
 
-All research diagrams are conceptual illustrations, not experimental results. EnterpriseSaga has play/pause and step controls; MolWorld has a keyboard-accessible stage slider; RCML lets visitors change the semantic relation. Animations respect reduced-motion preferences. Publications and other core content remain readable without JavaScript.
+Research figures are redrawn from the papers rather than generic animations:
+
+- **EnterpriseSaga:** a static evidence chain based on the Northstar billing example in Figure 1.
+- **MolWorld:** Figure 1's expanding molecule-transfer graph, with original, earlier-generated, and later-generated cohorts. Nodes are whole molecules; edges are MMP relations. The H-to-methyl inset illustrates a local structural modification, not a synthesis reaction. Graph coordinates and animation timing are schematic.
+- **RCML:** a static comparison of fixed and relation-conditioned representation spaces, based on Figure 1.
+- **XAI-Refine:** the explanation, literature verification, constrained revision, and validation loop.
+- **Profile-conditioned latent dynamics:** training supervision from observed transitions versus inference from the profile and current context.
+
+MolWorld pauses offscreen and when the tab is hidden, supports pause/replay, and shows the completed graph by default for reduced-motion preferences. All research figures and core content remain readable without JavaScript.
 
 The previous AcademicPages source is retained for recovery and reference, but is not used to generate the new homepage. The original theme license remains in `LICENSE`.

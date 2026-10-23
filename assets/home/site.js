@@ -7,22 +7,41 @@ window.addEventListener('scroll',updateNavigation,{passive:true});updateNavigati
 const filters=[...document.querySelectorAll('.filter')];
 filters.forEach(button=>button.addEventListener('click',()=>{const category=button.dataset.filter;let count=0;filters.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));document.querySelectorAll('.publication').forEach(p=>{p.hidden=category!=='all'&&p.dataset.category!==category;if(!p.hidden)count++;});document.getElementById('publication-count').textContent=`${count} publications and manuscripts`; }));
 
-// These are explanatory diagrams, not live benchmark traces or experimental results.
-const enterprise=document.getElementById('enterprise-demo');
-const evidenceDescriptions=['Select a question to trace its evidence.','1 / 3 · Locate the original decision.','2 / 3 · Find the later change in another system.','3 / 3 · Link the evidence across systems and time.'];
-let evidenceStep=0,evidenceTimer=null;
-function setEvidenceStep(step){evidenceStep=step;enterprise.querySelectorAll('.node').forEach(n=>n.classList.toggle('highlight',Number(n.dataset.step)<=step&&Number(n.dataset.step)>0));enterprise.querySelectorAll('.evidence-edge').forEach(n=>n.classList.toggle('visible',Number(n.dataset.step)<=step));document.getElementById('evidence-status').textContent=evidenceDescriptions[step];}
-function stopEvidence(){clearInterval(evidenceTimer);evidenceTimer=null;document.getElementById('evidence-play').textContent='Play';document.getElementById('evidence-play').setAttribute('aria-pressed','false');}
-document.getElementById('evidence-next').addEventListener('click',()=>{stopEvidence();setEvidenceStep((evidenceStep+1)%4);});
-document.getElementById('evidence-play').addEventListener('click',()=>{if(evidenceTimer){stopEvidence();return;}setEvidenceStep(evidenceStep===3?0:evidenceStep+1);document.getElementById('evidence-play').textContent='Pause';document.getElementById('evidence-play').setAttribute('aria-pressed','true');evidenceTimer=setInterval(()=>{if(evidenceStep===3)stopEvidence();else setEvidenceStep(evidenceStep+1);},1500);});
-
-const worldSlider=document.getElementById('world-step');
-const worldDescriptions=['0 / 3 · Begin with connected known molecules.','1 / 3 · Predict a possible local graph expansion.','2 / 3 · Generate a candidate from the selected context.','3 / 3 · Add a candidate linked by a verified MMP relation.'];
-function updateWorld(){let step=Number(worldSlider.value);document.querySelectorAll('.world-future').forEach(n=>{const threshold=Number(n.dataset.step);n.classList.toggle('visible',step>=threshold);n.classList.toggle('predicted',step===1&&threshold===1);});document.getElementById('world-status').textContent=worldDescriptions[step];worldSlider.setAttribute('aria-valuetext',worldDescriptions[step]);}
-worldSlider.addEventListener('input',updateWorld);updateWorld();
-const relationButtons=[...document.querySelectorAll('[data-relation]')];
-const relationDescriptions={object:'Object relation · connect the two bird images.',color:'Color relation · connect the two blue images.',scene:'Scene relation · connect the outdoor scenes.'};
-relationButtons.forEach(button=>button.addEventListener('click',()=>{relationButtons.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));document.querySelectorAll('.relation-edge').forEach(e=>e.classList.toggle('visible',e.dataset.edge===button.dataset.relation));document.getElementById('relation-status').textContent=relationDescriptions[button.dataset.relation];}));
-document.addEventListener('visibilitychange',()=>{if(document.hidden)stopEvidence();});
-new IntersectionObserver(entries=>{if(!entries[0].isIntersecting)stopEvidence();}).observe(enterprise);
-reducedMotion.addEventListener('change',()=>{if(reducedMotion.matches)stopEvidence();});
+// MolWorld Fig. 1: whole molecules join through verified MMP links.
+// Timing and coordinates explain the construction; they are not an experimental rollout.
+const world = document.getElementById('molworld');
+const svg = world.querySelector('.molworld-svg');
+const controls = document.getElementById('world-controls');
+const toggle = document.getElementById('world-toggle');
+const replay = document.getElementById('world-replay');
+const stage = document.getElementById('world-stage');
+const nodes = [...world.querySelectorAll('.mw-node:not(.cohort-0)')];
+const edges = [...world.querySelectorAll('.mw-growing-edge')];
+const earlyField = world.querySelector('.mw-field-early');
+const lateField = world.querySelector('.mw-field-late');
+const detail = [...world.querySelectorAll('.mw-detail-ring,.mw-detail-guide')];
+const mobileFigure = window.matchMedia('(max-width:540px)');
+function resizeFigure(){svg.setAttribute('viewBox',mobileFigure.matches?'0 0 440 675':'0 0 730 388');svg.classList.toggle('mobile-layout',mobileFigure.matches);}
+mobileFigure.addEventListener('change',resizeFigure);resizeFigure();
+let elapsed=0,lastTime=null,frame=null,inView=false,paused=reducedMotion.matches;
+const clamp=n=>Math.max(0,Math.min(1,n));
+function drawWorld(t){
+  edges.forEach(edge=>{edge.style.strokeDashoffset=String(1-clamp((t-Number(edge.dataset.at))/.45));});
+  nodes.forEach(node=>{const progress=clamp((t-Number(node.dataset.at))/.3);node.style.opacity=String(progress);node.querySelector('circle').setAttribute('r',String(6.3*(.6+.4*progress)));});
+  earlyField.style.opacity=String(clamp((t-1.5)/1.8));
+  lateField.style.opacity=String(clamp((t-6.7)/2));
+  detail.forEach(el=>el.style.opacity=String(clamp((t-7)/1.5)));
+  stage.textContent=t<1.8?'Begin with connected original molecules':t<7?'Earlier generation · extend the starting series':t<12?'Later generation · expand through connected paths':'New molecules remain reachable from the starting series';
+}
+function updateButton(){toggle.textContent=paused?'Play':'Pause';toggle.setAttribute('aria-label',paused?'Play graph animation':'Pause graph animation');}
+function canRun(){return inView&&!document.hidden&&!paused;}
+function tick(now){frame=null;if(!canRun()){lastTime=null;return;}if(lastTime!==null)elapsed+=(now-lastTime)/1000;lastTime=now;if(elapsed>17)elapsed=0;drawWorld(elapsed);frame=requestAnimationFrame(tick);}
+function syncPlayback(){if(canRun()&&frame===null){lastTime=null;frame=requestAnimationFrame(tick);}else if(!canRun()){if(frame!==null)cancelAnimationFrame(frame);frame=null;lastTime=null;}}
+controls.hidden=false;
+if(reducedMotion.matches){elapsed=13;drawWorld(elapsed);}else drawWorld(0);
+updateButton();
+toggle.addEventListener('click',()=>{paused=!paused;updateButton();syncPlayback();});
+replay.addEventListener('click',()=>{elapsed=0;drawWorld(0);paused=false;updateButton();syncPlayback();});
+new IntersectionObserver(entries=>{inView=entries[0].isIntersecting;syncPlayback();},{threshold:.15}).observe(svg);
+document.addEventListener('visibilitychange',syncPlayback);
+reducedMotion.addEventListener('change',()=>{if(reducedMotion.matches){paused=true;elapsed=13;drawWorld(elapsed);updateButton();syncPlayback();}});
