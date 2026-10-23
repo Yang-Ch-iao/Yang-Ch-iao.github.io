@@ -12,23 +12,21 @@ def molworld_figure():
                  (181.305,206.885),(151.995,265.11),(236.78,249.705),(134.025,253.29),(162.965,203.385),
                  (152.705,283.165),(278,210),(180.795,318.065),(225.095,310.42),(189.525,185.57),(236.385,229.82),(278,280)]
     nodes=[(75+(x-119)*2.25,18+(332-y)*2.25) for x,y in paper_nodes]
-    initial_edges=[(0,1),(1,2),(2,3),(3,4),(4,0),(5,4),(6,0),(7,3),(8,3),(9,2),(10,1),(11,0),(5,7),(7,8),(8,9),(9,10),(10,6),(6,11),(11,5)]
-    anchor_sets=[{0,1,2,3,4},{0,4,5,11,15}]
-    # Illustrative dense anchor connectivity, clarified by the paper's author.
-    # Most accepted candidates link to four or five context molecules; a few links
-    # also reach other existing molecules. Verification still decides acceptance.
-    candidate_anchors={1:{12:[0,1,2,3,4],13:[0,1,3,4],14:[0,1,2,3,4],15:[0,1,2,4]},
-                       2:{17:[0,4,5,11,15],18:[0,4,5,15],19:[0,4,5,11,15],20:[0,4,11,15]}}
-    extra_edges={1:[(8,12),(6,13),(10,14),(11,15),(5,15)],
-                 2:[(7,18),(10,19),(2,20),(19,20)]}
-    verified_edges={r:[(a,n) for n,context in group.items() for a in context]+extra_edges[r]
-                    for r,group in candidate_anchors.items()}
-    # The initial perimeter is locally connected, not a collection of leaves.
-    # Generated nodes show several representative anchor links, without every edge.
-    displayed_edges={1:[(a,12) for a in candidate_anchors[1][12]]+[(0,13),(1,13),(4,13),(0,14),(1,14),(2,14),(0,15),(4,15),(11,15)],
-                     2:[(a,17) for a in candidate_anchors[2][17]]+[(4,18),(5,18),(15,18),(0,19),(4,19),(11,19),(0,20),(4,20),(11,20)]}
-    for r,pairs in displayed_edges.items():
-        assert set(pairs).issubset(verified_edges[r])
+    initial_edges=[(0,1),(1,2),(2,3),(3,4),(4,0),(5,4),(5,0)]
+    anchor_sets=[{0,1,2,3,4},{0,4,5,6,11},{0,4,5,11,15}]
+    # Draw representative verified links, not every possible MMP connection.
+    # Each batch links back to a connected context available before generation.
+    displayed_edges={
+        1:[(a,6) for a in [0,1,2,3,4]]+
+          [(2,7),(3,7),(4,7),(2,8),(3,8),(4,8),
+           (0,9),(1,9),(2,9),(0,10),(1,10),(2,10),
+           (0,11),(1,11),(4,11),(5,11),(6,11),(7,8),(9,10)],
+        2:[(a,12) for a in [0,4,5,6,11]]+
+          [(0,13),(6,13),(11,13),(0,14),(4,14),(6,14),
+           (0,15),(4,15),(11,15)],
+        3:[(a,17) for a in [0,4,5,11,15]]+
+          [(4,18),(5,18),(15,18),(0,19),(4,19),(11,19),
+           (0,20),(4,20),(11,20)]}
     rejected = {16,21}
     def edge(a,b,classes,round_num=0):
         x,y=nodes[a];xx,yy=nodes[b]
@@ -38,14 +36,15 @@ def molworld_figure():
         lines += [edge(a,b,'mw-verified-edge '+('mw-anchor-link' if a in anchor_sets[r-1] else 'mw-other-link'),r) for a,b in pairs]
     # Highlight only actual edges inside the chosen connected five-node context.
     anchor_edges=[]
-    all_edges=initial_edges+displayed_edges[1]
+    all_edges=list(initial_edges)
     for r,selected in enumerate(anchor_sets,1):
         anchor_edges += [edge(a,b,'mw-anchor-edge',r) for a,b in all_edges if a in selected and b in selected]
+        all_edges += displayed_edges[r]
     dots=[]
     for i,(x,y) in enumerate(nodes):
-        r=0 if i<12 else 1 if i<17 else 2
+        r=0 if i<6 else 1 if i<12 else 2 if i<17 else 3
         classes='mw-node '+('mw-existing' if r==0 else 'mw-candidate')+(' mw-rejected' if i in rejected else '')
-        title='Existing molecule' if r==0 else 'Candidate with no verified link; not incorporated' if i in rejected else 'Generated candidate; incorporated only after MMP verification'
+        title='Original molecule' if r==0 else 'Candidate with no verified link; not incorporated' if i in rejected else 'Generated candidate; incorporated only after MMP verification'
         dots.append(f'<g class="{classes}" data-node="{i}" data-round="{r}" transform="translate({x} {y})"><title>{title}</title><circle class="mw-dot" r="6.5"/>')
         for ar,selected in enumerate(anchor_sets,1):
             if i in selected: dots.append(f'<circle class="mw-anchor-ring" data-round="{ar}" r="11"/>')
@@ -62,7 +61,7 @@ def molworld_figure():
         <text x="572" y="{y+4}" text-anchor="middle" class="chem">NH</text><text x="603" y="{y-27}" text-anchor="middle" class="chem">O</text>
         <circle cx="641" cy="{y}" r="21" fill="{('#f2ddd4' if variable=='H' else '#e5e2f2')}"/><text x="641" y="{y+5}" text-anchor="middle" class="chem">{variable}</text>'''
     return f'''<svg viewBox="0 0 730 445" class="molworld-svg" role="img" aria-labelledby="mw-title mw-desc">
-    <title id="mw-title">Select a connected context, generate a batch, then verify its connections</title><desc id="mw-desc">Two illustrative rounds. Five connected molecules are selected from the current graph as an anchor context. Multiple candidates are sampled together without predetermined edges. Accepted candidates typically connect to most or all five anchor molecules, with occasional additional links to other molecules. Only representative verified links are drawn to avoid clutter: one candidate per round shows all five anchor links, while the others show three representative connections. The original graph also has local connections between peripheral molecules. These illustrative links appear after MMP verification. Candidates without a verified connection to the current graph are not incorporated. A new five-node context can include previously accepted molecules.</desc>
+    <title id="mw-title">Select a connected context, generate a batch, then verify its connections</title><desc id="mw-desc">Three illustrative rounds begin with six original molecules, shown in blue. Five connected molecules are selected from the current graph as an anchor context. Multiple candidates are sampled together without predetermined edges. Accepted candidates typically connect to most or all five anchor molecules, with occasional additional links to other molecules. Only representative verified links are drawn to avoid clutter: one candidate per round shows all five anchor links, while the others show several representative connections. New candidates appear green; accepted molecules turn white before the next round. No generated molecules are present at the beginning. These illustrative links appear after MMP verification. Candidates without a verified connection to the current graph are not incorporated. A new five-node context can include previously accepted molecules.</desc>
     <defs><linearGradient id="mw-property-reference" x1="0%" x2="100%"><stop stop-color="#fff0ba"/><stop offset=".5" stop-color="#ffd59e"/><stop offset="1" stop-color="#ce2b1d"/></linearGradient><marker id="mw-property-tip" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#ce2b1d"/></marker><linearGradient id="mw-field-base" x2="1" y2="1"><stop stop-color="#f8f2e7"/><stop offset="1" stop-color="#f2e8d5"/></linearGradient><linearGradient id="mw-field-one" x2="1" y2="1"><stop stop-color="#f4ead7"/><stop offset="1" stop-color="#e9d8bd"/></linearGradient><linearGradient id="mw-field-two" x2="1" y2="1"><stop stop-color="#f2e5de"/><stop offset="1" stop-color="#e6cfc3"/></linearGradient><marker id="mw-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#7f9084"/></marker></defs>
     <g class="mw-graph">
     <path class="mw-region mw-region-2" d="{contours[2]}"/><path class="mw-region mw-region-1" d="{contours[1]}"/><path class="mw-region mw-region-0" d="{contours[0]}"/>
@@ -74,7 +73,7 @@ def molworld_figure():
     <path d="M575 163V181" stroke="#5d6965" marker-end="url(#mw-arrow)"/><text x="585" y="177" class="figure-small">H → CH₃</text>
     <text x="490" y="284" class="figure-small">Shared scaffold, changed fragment.</text><text x="490" y="303" class="figure-small">MMP = matched molecular pair.</text>
     <path d="M491 335H522" stroke="#758a7e" stroke-width="1.4"/><text x="533" y="339" class="figure-small">Selected verified links</text>
-    <circle cx="506" cy="365" r="6.5" fill="white" stroke="#8d9891" stroke-dasharray="2 2"/><text x="533" y="369" class="figure-small">Candidate awaiting verification</text></g>
+    <circle cx="506" cy="365" r="6.5" fill="#e2f0d9" stroke="#385623" stroke-dasharray="2 2"/><text x="533" y="369" class="figure-small">Candidate awaiting verification</text></g>
     </svg>'''
 
 ENTERPRISE = '''<div class="es-framework" aria-label="EnterpriseSaga coarse-to-fine construction framework, adapted from Figure 2">

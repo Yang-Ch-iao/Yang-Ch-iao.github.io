@@ -7,7 +7,7 @@ window.addEventListener('scroll',updateNavigation,{passive:true});updateNavigati
 const filters=[...document.querySelectorAll('.filter')];
 filters.forEach(button=>button.addEventListener('click',()=>{const category=button.dataset.filter;let count=0;filters.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));document.querySelectorAll('.publication').forEach(p=>{p.hidden=category!=='all'&&p.dataset.category!==category;if(!p.hidden)count++;});document.getElementById('publication-count').textContent=`${count} publications and manuscripts`; }));
 
-// Two schematic generation rounds, following MolWorld Section 3.2.
+// Three schematic generation rounds, following MolWorld Section 3.2.
 // Context conditioning does not prescribe a parent or an edge for a candidate.
 const world=document.getElementById('molworld');
 const svg=world.querySelector('.molworld-svg');
@@ -21,7 +21,7 @@ const anchors=[...world.querySelectorAll('.mw-anchor-ring,.mw-anchor-edge')];
 const mobileFigure=window.matchMedia('(max-width:540px)');
 function resizeFigure(){svg.setAttribute('viewBox',mobileFigure.matches?'0 0 460 445':'0 0 730 445');svg.classList.toggle('mobile-layout',mobileFigure.matches);}
 mobileFigure.addEventListener('change',resizeFigure);resizeFigure();
-const ROUND_SECONDS=4,CYCLE_SECONDS=ROUND_SECONDS*2;
+const ROUND_SECONDS=4,CYCLE_SECONDS=ROUND_SECONDS*3;
 let elapsed=0,lastTime=null,frame=null,inView=false,paused=reducedMotion.matches;
 const clamp=n=>Math.max(0,Math.min(1,n));
 const ease=n=>{n=clamp(n);return n*n*(3-2*n);};
@@ -34,6 +34,7 @@ function drawWorld(t){
     const appear=ease((local-.35)/.85);
     node.style.opacity=String(cycleFade*appear*(rejected?1-ease((local-2.6)/.4):1));
     node.classList.toggle('verified',local>=2.6&&!rejected);
+    node.classList.toggle('incorporated',local>=3.2&&!rejected);
     node.classList.toggle('rejected',local>=2.6&&rejected);
     node.querySelector('.mw-dot').setAttribute('r',String(6.5*(.8+.2*appear)));
   }
@@ -49,7 +50,7 @@ function drawWorld(t){
     const local=t-(Number(anchor.dataset.round)-1)*ROUND_SECONDS;
     anchor.style.opacity=String(ease(local/.35)*(1-ease((local-2.9)/1.1)));
   }
-  const round=t<ROUND_SECONDS?1:2,local=t-(round-1)*ROUND_SECONDS;
+  const round=Math.min(3,Math.floor(t/ROUND_SECONDS)+1),local=t-(round-1)*ROUND_SECONDS;
   const labels=['Select a connected 5-molecule anchor context','Sample multiple candidates from the whole context','Verify MMP links to the current graph','Incorporate connected candidates; update the graph'];
   const index=local<.35?0:local<1.1?1:local<2.6?2:3;
   stage.textContent=`Round ${round} · ${index+1}/4 · ${labels[index]}`;
@@ -62,7 +63,7 @@ function syncPlayback(){if(canRun()&&frame===null){lastTime=null;frame=requestAn
 controls.hidden=false;elapsed=reducedMotion.matches?CYCLE_SECONDS:0;drawWorld(elapsed);updateButton();
 toggle.addEventListener('click',()=>{if(paused&&elapsed>=CYCLE_SECONDS){elapsed=0;drawWorld(0);}paused=!paused;updateButton();syncPlayback();});
 document.getElementById('world-replay').addEventListener('click',()=>{elapsed=0;drawWorld(0);paused=false;updateButton();syncPlayback();});
-document.getElementById('world-next').addEventListener('click',()=>{const steps=[.25,.9,2.5,3.2,4.25,4.9,6.5,7.2];elapsed=steps.find(t=>t>elapsed+.1)??.25;paused=true;drawWorld(elapsed);updateButton();syncPlayback();});
+document.getElementById('world-next').addEventListener('click',()=>{const steps=[.25,.9,2.5,3.6,4.25,4.9,6.5,7.6,8.25,8.9,10.5,11.6];elapsed=steps.find(t=>t>elapsed+.1)??.25;paused=true;drawWorld(elapsed);updateButton();syncPlayback();});
 new IntersectionObserver(entries=>{inView=entries[0].isIntersecting;syncPlayback();},{threshold:.15}).observe(svg);
 document.addEventListener('visibilitychange',syncPlayback);
 reducedMotion.addEventListener('change',()=>{if(reducedMotion.matches){paused=true;elapsed=CYCLE_SECONDS;drawWorld(elapsed);updateButton();syncPlayback();}});

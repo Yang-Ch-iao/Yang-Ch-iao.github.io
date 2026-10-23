@@ -169,3 +169,10 @@ section{padding:28px 0}.section-heading{margin-bottom:17px}h2{font-size:23px}.se
 @media(min-width:1101px){.evidence-card,.molworld-card,.rcml-card,.xai-card,.milnet-card{grid-template-columns:minmax(280px,40%) minmax(0,1fr)}.research-card .card-copy{padding:24px}.research-card .card-copy p{font-size:13.5px;line-height:1.8}.research-card .card-copy h3{font-size:16px}}
 .research-card .card-copy p+p{margin-top:12px}
 @media(max-width:540px){.xai-loop .xai-step-title{font-size:14px}.xai-loop .xai-step-detail{font-size:10.5px}.xai-loop .xai-model-name{font-size:11px}.xai-loop .xai-corpus text{font-size:11px}.xai-loop .xai-corpus .xai-corpus-detail{font-size:9px}.xai-loop .xai-evidence-label{font-size:9px}}
+
+/* Color encodes provenance and lifecycle; rings alone mark the chosen context. */
+.mw-existing .mw-dot{fill:#eaf2ff!important;stroke:#2f67c8!important}
+.molworld-svg .mw-candidate .mw-dot{fill:#e2f0d9!important;stroke:#385623!important}
+.molworld-svg .mw-candidate.incorporated .mw-dot,.molworld-svg:not(.has-motion) .mw-candidate:not(.mw-rejected) .mw-dot{fill:#fff!important;stroke:#535353!important;stroke-dasharray:none}
+.molworld-svg .mw-candidate.rejected .mw-dot{fill:#f4ece6!important;stroke:#b99c90!important}
+.mw-dot{transition:fill .3s,stroke .3s}
