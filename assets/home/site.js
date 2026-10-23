@@ -101,3 +101,14 @@ new IntersectionObserver(entries=>{relationVisible=entries[0].isIntersecting;sch
 document.addEventListener('visibilitychange',scheduleRelation);
 reducedMotion.addEventListener('change',()=>{if(reducedMotion.matches){relationAuto=false;relationButton();scheduleRelation();setRelation(relationMode);}});
 relationButton();paintRelation(structuredClone(relationTarget(relationMode)));
+
+// XAI-Refine: follow the accepted-update feedback loop without implying every update passes.
+const xaiCard=document.getElementById('xai-refine');
+const xaiToggle=document.getElementById('xai-toggle');
+let xaiPaused=reducedMotion.matches,xaiVisible=false;
+function syncXaiLoop(){xaiCard.classList.toggle('loop-running',xaiVisible&&!document.hidden&&!xaiPaused);xaiToggle.textContent=xaiPaused?'Play':'Pause';xaiToggle.setAttribute('aria-label',xaiPaused?'Play XAI refinement loop':'Pause XAI refinement loop');}
+xaiToggle.hidden=false;xaiCard.classList.add('has-loop-motion');
+xaiToggle.addEventListener('click',()=>{xaiPaused=!xaiPaused;syncXaiLoop();});
+new IntersectionObserver(entries=>{xaiVisible=entries[0].isIntersecting;syncXaiLoop();},{threshold:.15}).observe(xaiCard);
+document.addEventListener('visibilitychange',syncXaiLoop);
+reducedMotion.addEventListener('change',()=>{if(reducedMotion.matches)xaiPaused=true;syncXaiLoop();});syncXaiLoop();
