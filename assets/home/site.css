@@ -42,3 +42,6 @@ section{padding:40px 0;border-top:1px solid var(--line)}.section-heading{display
 .rcml-card{--relation-ink:#a76b31;--relation-wash:#fbefde;--relation-edge:#d5a568}.rcml-card[data-relation=fishing]{--relation-ink:#aa5555;--relation-wash:#f8e8e7;--relation-edge:#cf8b87}.relation-panel{background:#fdfcf9}.relation-tabs button[aria-pressed=true]{border-color:var(--relation-edge);background:var(--relation-wash);color:var(--relation-ink)}.relation-question strong,.distance-reading strong{color:var(--relation-ink)}.rc-cluster{fill:var(--relation-wash);stroke:var(--relation-edge);stroke-opacity:.3;transition:fill .7s,stroke .7s}.rc-distance{stroke:#d9d4cb;opacity:.55}.rc-distance.close{stroke:var(--relation-edge);stroke-width:2;opacity:1}.rc-item-disc{stroke:#ddd7ce}.rc-item[data-item=hat] .rc-item-disc{stroke:var(--relation-ink);transition:stroke .7s}.rc-item text{fill:#514c45}.relation-comparison{border-color:#e7e1d7}.relation-comparison p,.distance-reading{color:#6b6257}
 
 .rc-item text{paint-order:stroke fill;stroke:#fdfcf9;stroke-width:4px;stroke-linejoin:round}
+
+/* Keep attention on the two pairs for the active relation. */
+.rc-distance{opacity:0;transition:opacity .35s,stroke .5s,stroke-width .5s}.rc-distance.close{opacity:1}
