@@ -2,10 +2,12 @@
 from pathlib import Path
 from html import escape
 import json
+from hashlib import sha256
 from research_visuals import molworld_figure, rcml_figure, ENTERPRISE, XAI, PROFILE
 
 ROOT = Path(__file__).resolve().parent
 data = json.loads((ROOT / 'content.json').read_text())
+def asset(path): return f'{path}?v={sha256((ROOT / path).read_bytes()).hexdigest()[:12]}'
 def esc(value): return escape(value, quote=True)
 def heading(n, title): return f'<div class="section-heading"><span class="number">{n}</span><h2>{title}</h2></div>'
 def external(label, url): return f'<a href="{esc(url)}" target="_blank" rel="noopener noreferrer">{label} ↗</a>'
@@ -28,7 +30,7 @@ html=f'''<!doctype html>
 <title>Yang Qiao · Machine Learning Research · Emory University</title>
 <meta name="description" content="Yang Qiao is a Ph.D. student at Emory University working on LLM agents and retrieval, AI for science, and multimodal learning.">
 <meta property="og:title" content="Yang Qiao · Machine Learning Research"><meta property="og:description" content="LLM agents and retrieval · AI for science · Multimodal learning. Ph.D. student at Emory University."><meta property="og:type" content="website"><meta property="og:url" content="https://yang-ch-iao.github.io/"><meta property="og:image" content="https://yang-ch-iao.github.io/images/profile.jpg">
-<link rel="canonical" href="https://yang-ch-iao.github.io/"><link rel="icon" href="assets/home/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/home/site.css"><script src="assets/home/site.js" defer></script></head>
+<link rel="canonical" href="https://yang-ch-iao.github.io/"><link rel="icon" href="assets/home/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="{asset('assets/home/site.css')}"><script src="{asset('assets/home/site.js')}" defer></script></head>
 <body><a class="skip" href="#main">Skip to content</a>
 <aside class="sidebar" aria-label="Site navigation"><a class="brand" href="#about">Yang Qiao</a><div class="side-description">Ph.D. student · Emory<br>LLM agents & retrieval<br>AI for science<br>Multimodal learning</div><nav aria-label="Sections">{nav}</nav><div class="side-bottom"><a href="mailto:{data['email']}">Email ↗</a><a href="{data['scholar']}" target="_blank" rel="noopener noreferrer">Google Scholar ↗</a><a href="files/Yang_Qiao_CV.pdf" target="_blank">Curriculum vitae ↗</a><div class="copyright">Atlanta, GA<br>© 2026 Yang Qiao</div></div></aside>
 <header class="mobile-header"><a class="brand" href="#about">Yang Qiao</a><div><a href="#research">Research</a><a href="#publications">Papers</a><a href="files/Yang_Qiao_CV.pdf">CV ↗</a></div></header>
