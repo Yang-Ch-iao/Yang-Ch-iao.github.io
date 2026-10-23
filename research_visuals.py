@@ -108,19 +108,18 @@ def rcml_figure(baseline=False):
         desc='For tennis, the sun hat is nearer the backpack in embedding space. For fishing, it is nearer the rod combo. Positions and pairwise distances change with the relation; positions are illustrative.'
     return f'''<svg class="embedding-space {'relation-baseline' if baseline else 'relation-space'}" viewBox="0 0 350 300" role="img" aria-labelledby="{prefix}-title {prefix}-desc"><title id="{prefix}-title">{title}</title><desc id="{prefix}-desc">{desc}</desc><defs>{clips}<pattern id="{prefix}-grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".65" fill="#dce0e5"/></pattern></defs><rect x="4" y="4" width="342" height="288" rx="6" fill="url(#{prefix}-grid)"/>{nodes}</svg>'''
 
-XAI = '''<svg viewBox="0 0 510 280" class="support-svg xai-loop" role="img" aria-labelledby="xai-title xai-desc"><title id="xai-title">XAI-Refine: a closed explanation–knowledge loop</title><desc id="xai-desc">Extract reliable explanations, verify them against literature, derive a minimal revision and training constraint, then validate the candidate model. Only accepted updates return to explanation discovery for the next iteration.</desc>
+XAI = '''<svg viewBox="0 0 510 280" class="support-svg xai-loop" role="img" aria-labelledby="xai-title xai-desc"><title id="xai-title">XAI-Refine: a closed explanation–knowledge loop</title><desc id="xai-desc">Extract reliable explanations, verify them against literature, derive a minimal revision and training constraint, then validate the candidate model. Refine updates the central brain-age model only after validation; the updated model then feeds Explain for the next iteration. There is no direct Refine-to-Explain shortcut.</desc>
 <defs><marker id="xai-loop-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#8c9bb5"/></marker><marker id="xai-return-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#627aa6"/></marker></defs>
-<path class="xai-track" d="M185 32C250 32 303 75 303 139C303 203 250 247 185 247C120 247 67 203 67 139C67 75 120 32 185 32Z"/>
+<path class="xai-track" d="M183 139V32H185C250 32 303 75 303 139C303 203 250 247 185 247C120 247 67 203 67 139H183Z"/>
 <g class="xai-arrows" marker-end="url(#xai-loop-arrow)"><path d="M250 47Q303 61 303 106"/><path d="M303 172Q288 236 258 247"/><path d="M113 247Q67 230 67 172"/></g>
-<path class="xai-feedback" d="M67 105Q67 47 112 32" marker-end="url(#xai-return-arrow)"/>
 <circle class="xai-flow-dot" r="3.5"/>
 <g class="xai-step"><rect x="120" y="5" width="130" height="54" rx="7"/><text x="185" y="27" class="xai-step-title">01 · Explain</text><text x="185" y="44" class="xai-step-detail">Model-side claims</text></g>
 <g class="xai-step"><rect x="238" y="112" width="130" height="54" rx="7"/><text x="303" y="134" class="xai-step-title">02 · Verify claims</text><text x="303" y="151" class="xai-step-detail">Model ↔ domain claims</text></g>
 <g class="xai-step"><rect x="120" y="220" width="130" height="54" rx="7"/><text x="185" y="242" class="xai-step-title">03 · Regularize</text><text x="185" y="259" class="xai-step-detail">Minimal revision → Rₜ</text></g>
 <g class="xai-step xai-validation"><rect x="2" y="112" width="120" height="54" rx="7"/><text x="67" y="134" class="xai-step-title">04 · Refine</text><text x="67" y="151" class="xai-step-detail">Retrain + validate</text></g>
 <g class="xai-central-model"><rect x="138" y="98" width="90" height="80" rx="9"/><text x="183" y="118" class="xai-model-name">Brain-age model</text><text x="183" y="143" class="xai-model">fₜ → fₜ₊₁</text><text x="183" y="162" class="xai-center-note">Accepted update</text></g>
-<path class="xai-model-route" d="M183 98V60M122 139H137" marker-end="url(#xai-return-arrow)"/>
-<text x="8" y="40" class="xai-return-label">Next iteration</text>
+<path class="xai-model-route" d="M122 139H134" marker-end="url(#xai-return-arrow)"/>
+<path class="xai-model-route" d="M183 98V65" marker-end="url(#xai-return-arrow)"/>
 <g class="xai-corpus"><title>Domain corpus: scientific literature retrieved to verify model claims</title><path d="M412 116C412 104 502 104 502 116V165C502 177 412 177 412 165Z"/><path class="xai-corpus-rim" d="M412 116C412 128 502 128 502 116"/><text x="457" y="143">Domain corpus</text><text x="457" y="159" class="xai-corpus-detail">Scientific literature</text></g>
 <path class="xai-corpus-link" d="M368 128H412M412 151H368" marker-end="url(#xai-loop-arrow)"/>
 <text x="390" y="121" class="xai-evidence-label">Query</text><text x="390" y="166" class="xai-evidence-label">Evidence</text>
