@@ -145,3 +145,7 @@ section{padding:28px 0}.section-heading{margin-bottom:17px}h2{font-size:23px}.se
 .has-loop-motion .xai-feedback-pulse{opacity:1}.loop-running .xai-feedback-pulse{animation-play-state:running}
 @keyframes xai-return-flow{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
 @media(max-width:540px){#xai-refine .xai-loop{max-width:none}.xai-loop .xai-block-title{font-size:16px}.xai-loop .xai-block-detail{font-size:13px}}
+
+.xai-loop .xai-verifier .xai-block-title{font-size:13px}.xai-loop .xai-verifier .xai-block-detail{font-size:11px}
+.xai-corpus path{fill:#edf5f4;stroke:#8eafaa;stroke-width:1.2}.xai-corpus .xai-corpus-rim{fill:none}
+.xai-loop .xai-corpus text{font:600 12px var(--sans);fill:#406e6a}

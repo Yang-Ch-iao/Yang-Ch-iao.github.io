@@ -105,10 +105,11 @@ def rcml_figure(baseline=False):
 
 XAI = '''<svg viewBox="0 0 530 520" class="support-svg xai-loop" role="img" aria-labelledby="xai-title xai-desc">
 <title id="xai-title">XAI-Refine: domain knowledge guides model correction</title>
-<desc id="xai-desc">Reliable model explanations yield model claims. Retrieved and verified scientific literature yields domain claims. Compare the claims on the same variable, measurement and scope; minimally revise the model explanation to satisfy the evidence. Translate the revision into a new regularization term, refine the predictor, and validate prediction, targeted change and non-target drift. Only accepted models return to explanation discovery.</desc>
+<desc id="xai-desc">Reliable model explanations yield model claims. Model claims generate neutral questions for retrieval and verification. An explicit literature corpus supplies the evidence; verified evidence is compiled into domain claims. Compare the claims on the same variable, measurement and scope; minimally revise the model explanation to satisfy the evidence. Translate the revision into a new regularization term, refine the predictor, and validate prediction, targeted change and non-target drift. Only accepted models return to explanation discovery.</desc>
 <defs><marker id="xai-loop-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#8999af"/></marker><marker id="xai-return-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#6082ac"/></marker></defs>
 <g class="xai-route" marker-end="url(#xai-loop-arrow)">
-<path d="M156 76V116"/><path d="M396 76V116"/>
+<path d="M156 76V116"/><path d="M354 76V86H396V116"/>
+<path d="M450 47H417"/><path d="M260 147H276V47H292"/>
 <path d="M156 178V197H278V218"/><path d="M396 178V197H278" marker-end="none"/>
 <path d="M278 280V299H156V318"/><path d="M260 351H292"/>
 <path d="M396 384V401H278V420"/>
@@ -117,8 +118,9 @@ XAI = '''<svg viewBox="0 0 530 520" class="support-svg xai-loop" role="img" aria
 <path class="xai-feedback-pulse" d="M94 462H34Q24 462 24 450V57Q24 47 34 47H52" pathLength="100"/>
 <text class="xai-cycle-label" x="12" y="268" transform="rotate(-90 12 268)">Re-explain the accepted model</text>
 <g class="xai-block xai-model-side"><rect x="52" y="18" width="208" height="58" rx="7"/><text class="xai-block-title" x="156" y="43">Current model · fₜ</text><text class="xai-block-detail" x="156" y="63">Learned brain-age predictor</text></g>
-<g class="xai-block xai-domain-side"><rect x="292" y="18" width="208" height="58" rx="7"/><text class="xai-block-title" x="396" y="43">Domain knowledge</text><text class="xai-block-detail" x="396" y="63">Scientific literature</text></g>
-<text class="xai-connector-label" x="156" y="101">Reliable explanations</text><text class="xai-connector-label" x="396" y="101">Retrieve &amp; verify</text>
+<g class="xai-block xai-domain-side xai-verifier"><rect x="292" y="18" width="125" height="58" rx="7"/><text class="xai-block-title" x="354" y="42">Retrieve &amp; verify</text><text class="xai-block-detail" x="354" y="62">Scientific evidence</text></g>
+<g class="xai-corpus"><title>Literature corpus: external scientific evidence for verification</title><path d="M450 27C450 15 526 15 526 27V68C526 80 450 80 450 68Z"/><path class="xai-corpus-rim" d="M450 27C450 39 526 39 526 27"/><text x="488" y="49">Literature</text><text x="488" y="65">corpus</text></g>
+<text class="xai-connector-label" x="156" y="101">Reliable explanations</text><text class="xai-connector-label" x="396" y="105">Compile evidence</text>
 <g class="xai-block xai-model-side"><rect x="52" y="116" width="208" height="62" rx="7"/><text class="xai-block-title" x="156" y="142">Model claims</text><text class="xai-block-detail" x="156" y="163">What the model has learned</text></g>
 <g class="xai-block xai-domain-side"><rect x="292" y="116" width="208" height="62" rx="7"/><text class="xai-block-title" x="396" y="142">Verified domain claims</text><text class="xai-block-detail" x="396" y="163">Evidence-consistent relations</text></g>
 <g class="xai-block xai-comparison"><rect x="94" y="218" width="368" height="62" rx="7"/><text class="xai-block-title" x="278" y="244">Compare model ↔ domain claims</text><text class="xai-block-detail" x="278" y="265">Align variable, measurement &amp; scope; identify the gap</text></g>
