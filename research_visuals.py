@@ -108,23 +108,46 @@ def rcml_figure(baseline=False):
         desc='For tennis, the sun hat is nearer the backpack in embedding space. For fishing, it is nearer the rod combo. Positions and pairwise distances change with the relation; positions are illustrative.'
     return f'''<svg class="embedding-space {'relation-baseline' if baseline else 'relation-space'}" viewBox="0 0 350 300" role="img" aria-labelledby="{prefix}-title {prefix}-desc"><title id="{prefix}-title">{title}</title><desc id="{prefix}-desc">{desc}</desc><defs>{clips}<pattern id="{prefix}-grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".65" fill="#dce0e5"/></pattern></defs><rect x="4" y="4" width="342" height="288" rx="6" fill="url(#{prefix}-grid)"/>{nodes}</svg>'''
 
+def xai_loop_connections():
+    # One rounded loop supplies the visible stroke, arrow tangents, and motion path.
+    route = 'M127 45H243Q303 45 303 105V187Q303 247 243 247H127Q67 247 67 187V105Q67 45 127 45Z'
+    boxes = [(35,9,110,72),(215,18,120,54),(238,118,130,54),(120,220,130,54),(2,118,120,54)]
+    points = [(127,45)]
+    def line(end):
+        start=points[-1]
+        points.extend((start[0]+(end[0]-start[0])*t/100,start[1]+(end[1]-start[1])*t/100) for t in range(1,101))
+    def curve(control,end):
+        start=points[-1]
+        for i in range(1,201):
+            t=i/200
+            points.append(((1-t)**2*start[0]+2*(1-t)*t*control[0]+t*t*end[0],(1-t)**2*start[1]+2*(1-t)*t*control[1]+t*t*end[1]))
+    line((243,45));curve((303,45),(303,105));line((303,187));curve((303,247),(243,247))
+    line((127,247));curve((67,247),(67,187));line((67,105));curve((67,45),(127,45))
+    arrows=[]
+    for x,y,w,h in boxes:
+        inside=lambda pt:x-6<=pt[0]<=x+w+6 and y-6<=pt[1]<=y+h+6
+        i=next(i for i in range(1,len(points)) if inside(points[i]) and not inside(points[i-1]))
+        px,py=points[i-1];qx,qy=points[i-2]
+        angle=math.degrees(math.atan2(py-qy,px-qx))
+        arrows.append(f'<path class="xai-arrowhead" d="M0 0L-5 -2.5L-5 2.5Z" transform="translate({px:.3f} {py:.3f}) rotate({angle:.3f})"/>')
+    cutouts=''.join(f'<rect x="{x-6}" y="{y-6}" width="{w+12}" height="{h+12}" fill="black"/>' for x,y,w,h in boxes)
+    return f'''<defs><mask id="xai-loop-gaps" maskUnits="userSpaceOnUse" x="0" y="0" width="510" height="280"><rect width="510" height="280" fill="white"/>{cutouts}</mask></defs>
+<path class="xai-track" d="{route}" mask="url(#xai-loop-gaps)"/>{''.join(arrows)}
+<g mask="url(#xai-loop-gaps)"><circle class="xai-flow-dot" r="2.5" style="offset-path:path('{route}')"/></g>'''
+
 XAI = '''<svg viewBox="0 0 510 280" class="support-svg xai-loop" role="img" aria-labelledby="xai-title xai-desc"><title id="xai-title">XAI-Refine: a closed explanation–knowledge loop</title><desc id="xai-desc">Extract reliable explanations, verify them against literature, derive a minimal revision and training constraint, then validate the candidate model. Refine updates the brain-age model only after validation; the updated model then feeds Explain for the next iteration. There is no direct Refine-to-Explain shortcut.</desc>
-<defs><marker id="xai-loop-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#8c9bb5"/></marker><marker id="xai-return-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#627aa6"/></marker></defs>
-<path class="xai-track" d="M90 45H275Q303 45 303 145C303 203 250 247 185 247C120 247 67 203 67 145Q67 45 90 45Z"/>
-<g class="xai-arrows" marker-end="url(#xai-loop-arrow)"><path d="M303 78V112"/><path d="M303 178Q288 236 258 247"/><path d="M113 247Q67 230 67 178"/></g>
-<circle class="xai-flow-dot" r="3.5"/>
+<defs><marker id="xai-loop-arrow" viewBox="0 0 5 5" refX="5" refY="2.5" markerUnits="userSpaceOnUse" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L5 2.5L0 5Z" fill="#8798b0"/></marker></defs>
+<!--xai-connections-->
 <g class="xai-step"><rect x="215" y="18" width="120" height="54" rx="7"/><text x="275" y="40" class="xai-step-title">01 · Explain</text><text x="275" y="57" class="xai-step-detail">Model-side claims</text></g>
 <g class="xai-step"><rect x="238" y="118" width="130" height="54" rx="7"/><text x="303" y="140" class="xai-step-title">02 · Verify claims</text><text x="303" y="157" class="xai-step-detail">Model ↔ domain claims</text></g>
 <g class="xai-step"><rect x="120" y="220" width="130" height="54" rx="7"/><text x="185" y="242" class="xai-step-title">03 · Regularize</text><text x="185" y="259" class="xai-step-detail">Minimal revision → Rₜ</text></g>
 <g class="xai-step xai-validation"><rect x="2" y="118" width="120" height="54" rx="7"/><text x="67" y="140" class="xai-step-title">04 · Refine</text><text x="67" y="157" class="xai-step-detail">Retrain + validate</text></g>
 <g class="xai-central-model"><rect x="35" y="9" width="110" height="72" rx="9"/><text x="90" y="29" class="xai-model-name">Brain-age model</text><text x="90" y="51" class="xai-model">fₜ → fₜ₊₁</text><text x="90" y="69" class="xai-center-note">Accepted update</text></g>
-<path class="xai-model-route" d="M67 112Q67 95 70 87" marker-end="url(#xai-return-arrow)"/>
-<path class="xai-model-route" d="M145 45H209" marker-end="url(#xai-return-arrow)"/>
 <g class="xai-corpus"><title>Domain corpus: scientific literature retrieved to verify model claims</title><path d="M412 116C412 104 502 104 502 116V165C502 177 412 177 412 165Z"/><path class="xai-corpus-rim" d="M412 116C412 128 502 128 502 116"/><text x="457" y="143">Domain corpus</text><text x="457" y="159" class="xai-corpus-detail">Scientific literature</text></g>
 <path class="xai-corpus-link" d="M368 134H407" marker-end="url(#xai-loop-arrow)"/>
 <path class="xai-corpus-link" d="M412 157H373" marker-end="url(#xai-loop-arrow)"/>
 <text x="390" y="127" class="xai-evidence-label">Query</text><text x="390" y="172" class="xai-evidence-label">Evidence</text>
-</svg>'''
+</svg>'''.replace('<!--xai-connections-->', xai_loop_connections())
 
 MILNET = '''<div class="milnet-story">
 <div class="milnet-animation-header"><div class="milnet-method-title">Complementary views. Selective mutual learning.</div><button id="milnet-toggle" class="small-button" hidden aria-label="Pause MILNet illustration">Pause</button></div>
