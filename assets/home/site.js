@@ -40,7 +40,9 @@ function drawWorld(t){
   for(const edge of edges){
     const local=t-(Number(edge.dataset.round)-1)*ROUND_SECONDS;
     const progress=ease((local-1.1)/1.5);
-    edge.style.opacity=String(progress>0?cycleFade:0);
+    // Earlier connections recede as the next batch is verified.
+    const historyFade=1-.65*ease((local-ROUND_SECONDS)/.45);
+    edge.style.opacity=String(progress>0?cycleFade*historyFade:0);
     edge.style.strokeDasharray='1';edge.style.strokeDashoffset=String(1-progress);
   }
   for(const anchor of anchors){
@@ -51,7 +53,7 @@ function drawWorld(t){
   const labels=['Select a connected 5-molecule anchor context','Sample multiple candidates from the whole context','Verify MMP links to the current graph','Incorporate connected candidates; update the graph'];
   const index=local<.35?0:local<1.1?1:local<2.6?2:3;
   stage.textContent=`Round ${round} · ${index+1}/4 · ${labels[index]}`;
-  world.querySelector('.mw-graph-caption').textContent=local<.35?'The highlighted five molecules form one connected context.':local<1.1?'The five-molecule context conditions a batch of candidates.':local<2.6?'Most verified links return to the five anchors; a few reach other molecules.':'Only candidates with a verified link to the current graph are added.';
+  world.querySelector('.mw-graph-caption').textContent=local<.35?'The highlighted five molecules form one connected context.':local<1.1?'The five-molecule context conditions a batch of candidates.':local<2.6?'Selected links show how new molecules connect back to the anchors.':'Only candidates with a verified link to the current graph are added.';
 }
 function updateButton(){toggle.textContent=paused?'Play':'Pause';toggle.setAttribute('aria-label',paused?'Play graph animation':'Pause graph animation');}
 function canRun(){return inView&&!document.hidden&&!paused;}
