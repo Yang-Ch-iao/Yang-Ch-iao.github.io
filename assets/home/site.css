@@ -149,3 +149,23 @@ section{padding:28px 0}.section-heading{margin-bottom:17px}h2{font-size:23px}.se
 .xai-loop .xai-verifier .xai-block-title{font-size:13px}.xai-loop .xai-verifier .xai-block-detail{font-size:11px}
 .xai-corpus path{fill:#edf5f4;stroke:#8eafaa;stroke-width:1.2}.xai-corpus .xai-corpus-rim{fill:none}
 .xai-loop .xai-corpus text{font:600 12px var(--sans);fill:#406e6a}
+
+/* Restore the circular explanation–knowledge loop around an explicit model. */
+#xai-refine .xai-loop{max-width:565px}.xai-panel{display:flex;flex-direction:column;justify-content:center}.xai-controls{margin-bottom:6px}
+.xai-central-model rect{fill:#edf3fc;stroke:#b8cae4;stroke-width:1.2}.xai-loop .xai-model-name{font:600 10px var(--sans);fill:#3f5d89}.xai-loop .xai-model-route{fill:none;stroke:#7c94b7;stroke-width:1.2}.xai-loop .xai-corpus text{font:600 10px var(--sans);fill:#406e6a}.xai-loop .xai-corpus .xai-corpus-detail{font-size:8px;font-weight:400}.xai-corpus-link{fill:none;stroke:#8fa9a7;stroke-width:1.2}.xai-loop .xai-evidence-label{font:8px var(--sans);fill:#6a8a87}
+/* A few explanatory outlines alternate between local detail and global context. */
+.milnet-animation-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.milnet-animation-header .milnet-method-title{margin-bottom:12px}.milnet-animation-header button{flex:none}.milnet-animation-header [hidden]{display:none}
+.milnet-view-caption{font:10px/1.5 var(--sans);color:#64809e;margin:11px 0 0;min-height:15px}
+.milnet-results .milnet-case{aspect-ratio:4/3;object-fit:contain;background:#f1f3f7;margin-bottom:8px}
+.milnet-case g{opacity:0;transition:opacity .45s ease}.milnet-case rect{fill:none;stroke:#9bd3f4;stroke-width:5;filter:drop-shadow(0 1px 2px #173b61)}
+#milnet[data-view="local"] .milnet-local-focus,#milnet[data-view="global"] .milnet-global-focus,#milnet[data-view="shared"] .milnet-case-a .milnet-global-focus,#milnet[data-view="shared"] .milnet-case-b .milnet-local-focus{opacity:1}
+.milnet-views>div{transition:background .4s,box-shadow .4s}
+#milnet[data-view="local"] .milnet-views>div:first-child,#milnet[data-view="global"] .milnet-views>div:last-child,#milnet[data-view="shared"] .milnet-views>div{background:#e6eef9;box-shadow:inset 0 0 0 1px #c6d7eb}
+#milnet[data-view="shared"] .milnet-transfer-icon{color:#507eaf}
+.milnet-illustration-note{font:10px/1.6 var(--sans);color:#7e8da0;margin:10px 0}
+@media(prefers-reduced-motion:reduce){.milnet-case g,.milnet-views>div{transition:none}}
+
+/* Give paper introductions room alongside their supporting figures. */
+@media(min-width:1101px){.evidence-card,.molworld-card,.rcml-card,.xai-card,.milnet-card{grid-template-columns:minmax(280px,40%) minmax(0,1fr)}.research-card .card-copy{padding:24px}.research-card .card-copy p{font-size:13.5px;line-height:1.8}.research-card .card-copy h3{font-size:16px}}
+.research-card .card-copy p+p{margin-top:12px}
+@media(max-width:540px){.xai-loop .xai-step-title{font-size:14px}.xai-loop .xai-step-detail{font-size:10.5px}.xai-loop .xai-model-name{font-size:11px}.xai-loop .xai-corpus text{font-size:11px}.xai-loop .xai-corpus .xai-corpus-detail{font-size:9px}.xai-loop .xai-evidence-label{font-size:9px}}

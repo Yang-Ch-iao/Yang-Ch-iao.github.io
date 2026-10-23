@@ -117,3 +117,16 @@ reducedMotion.addEventListener('change',()=>{if(reducedMotion.matches)xaiPaused=
 
 // Jump from a research direction to its papers in the full publication list.
 document.querySelectorAll('[data-publication-filter]').forEach(link=>link.addEventListener('click',()=>{const button=filters.find(button=>button.dataset.filter===link.dataset.publicationFilter);if(button)button.click();}));
+
+// Illustrative MILNet viewing scales, not attention measurements or inference traces.
+const milnetCard=document.getElementById('milnet'),milnetToggle=document.getElementById('milnet-toggle');
+const milnetViews=['local','global','shared'];
+const milnetCopy=['Local view · object and facial details','Global view · relationships across the scene','Complementary views · selective sharing'];
+let milnetPaused=reducedMotion.matches,milnetVisible=false,milnetElapsed=reducedMotion.matches?4.4:0,milnetLast=null,milnetFrame=null,milnetPhase=-1;
+function paintMilnet(){const phase=Math.floor(milnetElapsed/2.2)%3;if(phase===milnetPhase)return;milnetPhase=phase;milnetCard.dataset.view=milnetViews[phase];document.getElementById('milnet-view-caption').textContent=milnetCopy[phase];}
+function tickMilnet(now){milnetFrame=null;if(milnetPaused||!milnetVisible||document.hidden){milnetLast=null;return;}if(milnetLast!==null)milnetElapsed=(milnetElapsed+(now-milnetLast)/1000)%6.6;milnetLast=now;paintMilnet();milnetFrame=requestAnimationFrame(tickMilnet);}
+function syncMilnet(){milnetToggle.textContent=milnetPaused?'Play':'Pause';milnetToggle.setAttribute('aria-label',milnetPaused?'Play MILNet illustration':'Pause MILNet illustration');if(!milnetPaused&&milnetVisible&&!document.hidden){if(milnetFrame===null){milnetLast=null;milnetFrame=requestAnimationFrame(tickMilnet);}}else{if(milnetFrame!==null)cancelAnimationFrame(milnetFrame);milnetFrame=null;milnetLast=null;}}
+milnetToggle.hidden=false;paintMilnet();milnetToggle.addEventListener('click',()=>{milnetPaused=!milnetPaused;syncMilnet();});
+new IntersectionObserver(entries=>{milnetVisible=entries[0].isIntersecting;syncMilnet();},{threshold:.15}).observe(milnetCard);
+document.addEventListener('visibilitychange',syncMilnet);
+reducedMotion.addEventListener('change',()=>{if(reducedMotion.matches){milnetPaused=true;milnetElapsed=4.4;paintMilnet();}syncMilnet();});syncMilnet();
