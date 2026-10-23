@@ -68,19 +68,19 @@ const relationPlot=relationCard.querySelector('.relation-space');
 const relationButtons=[...relationCard.querySelectorAll('[data-embedding-relation]')];
 const relationPlay=document.getElementById('relation-play');
 const relationLayouts={
- feeding:{nursing:[230,110],milk:[110,220],sterilizer:[300,250],travel:[550,95],lumbar:[550,305]},
- support:{nursing:[245,180],milk:[550,80],sterilizer:[550,300],travel:[120,90],lumbar:[120,285]}
+ tennis:{hat:[230,110],backpack:[110,220],racket:[300,250],rod:[550,95],reel:[550,305]},
+ fishing:{hat:[245,180],backpack:[550,80],racket:[550,300],rod:[120,90],reel:[120,285]}
 };
 const relationCompact=window.matchMedia('(max-width:540px)');
-const mobileRelationLayouts={feeding:{nursing:[155,140],milk:[70,230],sterilizer:[230,250],travel:[370,70],lumbar:[350,420]},support:{nursing:[155,250],milk:[365,70],sterilizer:[365,350],travel:[70,140],lumbar:[90,380]}};
+const mobileRelationLayouts={tennis:{hat:[155,140],backpack:[70,230],racket:[230,250],rod:[370,70],reel:[350,420]},fishing:{hat:[155,250],backpack:[365,70],racket:[365,350],rod:[70,140],reel:[90,380]}};
 function relationTarget(mode){return (relationCompact.matches?mobileRelationLayouts:relationLayouts)[mode];}
-function clusterBounds(points,mode){const group=mode==='feeding'?['nursing','milk','sterilizer']:['nursing','travel','lumbar'];const xs=group.map(k=>points[k][0]),ys=group.map(k=>points[k][1]);return {cx:(Math.min(...xs)+Math.max(...xs))/2,cy:(Math.min(...ys)+Math.max(...ys))/2,rx:(Math.max(...xs)-Math.min(...xs))/2+62,ry:(Math.max(...ys)-Math.min(...ys))/2+68};}
-const relationCopy={feeding:['Supporting infant feeding','A nursing pillow, milk storage bags, and a bottle sterilizer are related through infant feeding, despite looking different.'],support:['Supporting the body','The same nursing pillow is now near the travel pillow and lumbar cushion. Milk storage bags and the sterilizer move farther away.']};
-let relationMode='feeding',relationPositions=structuredClone(relationTarget('feeding')),relationFrame=null,relationTimer=null,relationVisible=false,relationAuto=!reducedMotion.matches;
+function clusterBounds(points,mode){const group=mode==='tennis'?['hat','backpack','racket']:['hat','rod','reel'];const xs=group.map(k=>points[k][0]),ys=group.map(k=>points[k][1]);return {cx:(Math.min(...xs)+Math.max(...xs))/2,cy:(Math.min(...ys)+Math.max(...ys))/2,rx:(Math.max(...xs)-Math.min(...xs))/2+62,ry:(Math.max(...ys)-Math.min(...ys))/2+68};}
+const relationCopy={tennis:['Tennis-related co-purchases','Tennis shoppers connect the backpack with the racket and sun hat.'],fishing:['Fishing-related co-purchases','Fishing shoppers connect the rod combo with the reel and the same sun hat.']};
+let relationMode='tennis',relationPositions=structuredClone(relationTarget('tennis')),relationFrame=null,relationTimer=null,relationVisible=false,relationAuto=!reducedMotion.matches;
 let relationCluster=clusterBounds(relationPositions,relationMode);
 function paintRelation(points,bounds=clusterBounds(points,relationMode)){
  for(const [key,xy] of Object.entries(points))relationPlot.querySelector(`[data-item="${key}"]`).setAttribute('transform',`translate(${xy[0]} ${xy[1]})`);
- for(const line of relationPlot.querySelectorAll('.rc-distance')){const p=points.nursing,q=points[line.dataset.pair];line.setAttribute('x1',p[0]);line.setAttribute('y1',p[1]);line.setAttribute('x2',q[0]);line.setAttribute('y2',q[1]);const close=relationMode==='feeding'?['milk','sterilizer'].includes(line.dataset.pair):['travel','lumbar'].includes(line.dataset.pair);line.classList.toggle('close',close);}
+ for(const line of relationPlot.querySelectorAll('.rc-distance')){const p=points[line.dataset.from],q=points[line.dataset.to];line.setAttribute('x1',p[0]);line.setAttribute('y1',p[1]);line.setAttribute('x2',q[0]);line.setAttribute('y2',q[1]);line.classList.toggle('close',line.dataset.relation===relationMode);}
  const cluster=relationPlot.querySelector('.rc-cluster');for(const [key,value] of Object.entries(bounds))cluster.setAttribute(key,value);relationCluster=bounds;
  relationPositions=points;
 }
@@ -88,17 +88,17 @@ function setRelation(mode){
  relationMode=mode;relationCard.dataset.relation=mode;
  relationButtons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.embeddingRelation===mode)));
  document.getElementById('relation-name').textContent=relationCopy[mode][0];document.getElementById('relation-explanation').textContent=relationCopy[mode][1];
- document.getElementById('distance-milk').textContent=mode==='feeding'?'Closer':'Farther';document.getElementById('distance-travel').textContent=mode==='support'?'Closer':'Farther';
+ document.getElementById('distance-backpack').textContent=mode==='tennis'?'Closer':'Farther';document.getElementById('distance-rod').textContent=mode==='fishing'?'Closer':'Farther';
  if(relationFrame!==null)cancelAnimationFrame(relationFrame);
  if(reducedMotion.matches){paintRelation(structuredClone(relationTarget(mode)));relationFrame=null;return;}
  const from=structuredClone(relationPositions),to=relationTarget(mode),oldCluster={...relationCluster},newCluster=clusterBounds(to,mode);let start=null;
  function animate(now){if(start===null)start=now;const t=ease((now-start)/1100);const next={};for(const key of Object.keys(from))next[key]=from[key].map((v,i)=>v+(to[key][i]-v)*t);const bounds={};for(const key of Object.keys(oldCluster))bounds[key]=oldCluster[key]+(newCluster[key]-oldCluster[key])*t;paintRelation(next,bounds);if(t<1)relationFrame=requestAnimationFrame(animate);else relationFrame=null;}
  relationFrame=requestAnimationFrame(animate);
 }
-function scheduleRelation(){clearTimeout(relationTimer);relationTimer=null;if(relationAuto&&relationVisible&&!document.hidden)relationTimer=setTimeout(()=>{setRelation(relationMode==='feeding'?'support':'feeding');scheduleRelation();},6500);}
+function scheduleRelation(){clearTimeout(relationTimer);relationTimer=null;if(relationAuto&&relationVisible&&!document.hidden)relationTimer=setTimeout(()=>{setRelation(relationMode==='tennis'?'fishing':'tennis');scheduleRelation();},6500);}
 function relationButton(){relationPlay.textContent=relationAuto?'Pause':'Play';relationPlay.setAttribute('aria-label',relationAuto?'Pause relation animation':'Play relation animation');}
 relationButtons.forEach(b=>b.addEventListener('click',()=>{relationAuto=false;relationButton();setRelation(b.dataset.embeddingRelation);scheduleRelation();}));
-relationPlay.hidden=false;relationPlay.addEventListener('click',()=>{relationAuto=!relationAuto;relationButton();if(relationAuto)setRelation(relationMode==='feeding'?'support':'feeding');scheduleRelation();});
+relationPlay.hidden=false;relationPlay.addEventListener('click',()=>{relationAuto=!relationAuto;relationButton();if(relationAuto)setRelation(relationMode==='tennis'?'fishing':'tennis');scheduleRelation();});
 new IntersectionObserver(entries=>{relationVisible=entries[0].isIntersecting;scheduleRelation();},{threshold:.3}).observe(relationPlot);
 document.addEventListener('visibilitychange',scheduleRelation);
 reducedMotion.addEventListener('change',()=>{if(reducedMotion.matches){relationAuto=false;relationButton();scheduleRelation();setRelation(relationMode);}});
