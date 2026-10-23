@@ -91,22 +91,17 @@ def rcml_figure(baseline=False):
     # Figure 1's fixed-vs-conditioned contrast, with Figure 2(a)'s product photos.
     prefix='rc-base' if baseline else 'rc'
     positions=({'hat':(175,145),'backpack':(65,65),'racket':(65,235),'rod':(285,65),'reel':(285,235)} if baseline else
-               {'hat':(155,85),'backpack':(65,145),'racket':(155,215),'rod':(285,65),'reel':(285,235)})
+               {'hat':(135,85),'backpack':(65,145),'racket':(135,215),'rod':(285,65),'reel':(285,235)})
     items=[('hat','Sun hat',(375,277,109,75)),('backpack','Backpack',(97,196,93,95)),('racket','Racket',(405,68,97,102)),('rod','Rod combo',(334,484,80,83)),('reel','Reel',(98,425,80,93))]
     nodes=''.join(f'<g class="rc-item" data-item="{key}" transform="translate({positions[key][0]} {positions[key][1]})"><title>{label}</title><circle class="rc-item-disc" r="27"/><svg x="{-20*cw/max(cw,ch):.2f}" y="{-20*ch/max(cw,ch):.2f}" width="{40*cw/max(cw,ch):.2f}" height="{40*ch/max(cw,ch):.2f}" viewBox="{cx} {cy} {cw} {ch}" preserveAspectRatio="xMidYMid meet" overflow="hidden"><image href="images/research/rcml-figure2.png" width="2834" height="1082" clip-path="url(#{prefix}-photo-{key})"/></svg><text y="44" text-anchor="middle">{label}</text></g>' for key,label,(cx,cy,cw,ch) in items)
     clips=''.join(f'<clipPath id="{prefix}-photo-{key}"><rect x="{cx}" y="{cy}" width="{cw}" height="{ch}"/></clipPath>' if key!='hat' else f'<clipPath id="{prefix}-photo-hat"><path d="M406 277H484V352H375V323L402 310Z"/></clipPath>' for key,_,(cx,cy,cw,ch) in items)
     if baseline:
-        lines=''.join(f'<line class="rc-fixed-distance" x1="175" y1="145" x2="{positions[k][0]}" y2="{positions[k][1]}"/>' for k in ['backpack','rod'])
         title='Traditional relation-agnostic embeddings stay fixed'
         desc='The same five products have one fixed set of embeddings and distances, reused for tennis and fishing relations. Positions are illustrative.'
-        cluster=''
     else:
-        pairs=[('backpack','racket','tennis'),('backpack','hat','tennis'),('rod','reel','fishing'),('rod','hat','fishing')]
-        lines=''.join(f'<line class="rc-distance {"close" if relation=="tennis" else ""}" data-from="{a}" data-to="{b}" data-relation="{relation}" x1="{positions[a][0]}" y1="{positions[a][1]}" x2="{positions[b][0]}" y2="{positions[b][1]}"/>' for a,b,relation in pairs)
         title='RCML embeddings change with the selected relation'
-        desc='For tennis, the backpack connects to the racket and sun hat. For fishing, the rod connects to the reel and the same sun hat. The embeddings move with the relation; positions are illustrative.'
-        cluster='<ellipse class="rc-cluster" cx="110" cy="150" rx="101" ry="119"/>'
-    return f'''<svg class="embedding-space {'relation-baseline' if baseline else 'relation-space'}" viewBox="0 0 350 300" role="img" aria-labelledby="{prefix}-title {prefix}-desc"><title id="{prefix}-title">{title}</title><desc id="{prefix}-desc">{desc}</desc><defs>{clips}<pattern id="{prefix}-grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".65" fill="#dce0e5"/></pattern></defs><rect x="4" y="4" width="342" height="288" rx="6" fill="url(#{prefix}-grid)"/>{cluster}{lines}{nodes}</svg>'''
+        desc='For tennis, the sun hat is nearer the backpack in embedding space. For fishing, it is nearer the rod combo. Positions and pairwise distances change with the relation; positions are illustrative.'
+    return f'''<svg class="embedding-space {'relation-baseline' if baseline else 'relation-space'}" viewBox="0 0 350 300" role="img" aria-labelledby="{prefix}-title {prefix}-desc"><title id="{prefix}-title">{title}</title><desc id="{prefix}-desc">{desc}</desc><defs>{clips}<pattern id="{prefix}-grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".65" fill="#dce0e5"/></pattern></defs><rect x="4" y="4" width="342" height="288" rx="6" fill="url(#{prefix}-grid)"/>{nodes}</svg>'''
 
 XAI = '''<svg viewBox="0 0 370 280" class="support-svg xai-loop" role="img" aria-labelledby="xai-title xai-desc"><title id="xai-title">XAI-Refine: a closed explanation–knowledge loop</title><desc id="xai-desc">Extract reliable explanations, verify them against literature, derive a minimal revision and training constraint, then validate the candidate model. Only accepted updates return to explanation discovery for the next iteration.</desc>
 <defs><marker id="xai-loop-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#8c9bb5"/></marker><marker id="xai-return-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#627aa6"/></marker></defs>

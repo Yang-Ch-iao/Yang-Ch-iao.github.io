@@ -68,18 +68,15 @@ const relationPlot=relationCard.querySelector('.relation-space');
 const relationButtons=[...relationCard.querySelectorAll('[data-embedding-relation]')];
 const relationPlay=document.getElementById('relation-play');
 const relationLayouts={
- tennis:{hat:[155,85],backpack:[65,145],racket:[155,215],rod:[285,65],reel:[285,235]},
- fishing:{hat:[195,85],backpack:[65,65],racket:[65,235],rod:[285,145],reel:[195,215]}
+ tennis:{hat:[135,85],backpack:[65,145],racket:[135,215],rod:[285,65],reel:[285,235]},
+ fishing:{hat:[215,85],backpack:[65,235],racket:[65,65],rod:[285,145],reel:[215,215]}
 };
 function relationTarget(mode){return relationLayouts[mode];}
-function clusterBounds(points,mode){const group=mode==='tennis'?['hat','backpack','racket']:['hat','rod','reel'];const xs=group.map(k=>points[k][0]),ys=group.map(k=>points[k][1]);return {cx:(Math.min(...xs)+Math.max(...xs))/2,cy:(Math.min(...ys)+Math.max(...ys))/2,rx:(Math.max(...xs)-Math.min(...xs))/2+56,ry:(Math.max(...ys)-Math.min(...ys))/2+54};}
-const relationCopy={tennis:['Tennis-related co-purchases','Tennis shoppers connect the backpack with the racket and sun hat.'],fishing:['Fishing-related co-purchases','Fishing shoppers connect the rod combo with the reel and the same sun hat.']};
+const relationCopy={tennis:['Tennis-related co-purchases','Under the tennis relation, the hat is nearer the backpack in embedding space.'],fishing:['Fishing-related co-purchases','Under the fishing relation, the hat moves nearer the rod combo and farther from the backpack.']};
 let relationMode='tennis',relationPositions=structuredClone(relationTarget('tennis')),relationFrame=null,relationTimer=null,relationVisible=false,relationAuto=!reducedMotion.matches;
-let relationCluster=clusterBounds(relationPositions,relationMode);
-function paintRelation(points,bounds=clusterBounds(points,relationMode)){
+function paintRelation(points){
  for(const [key,xy] of Object.entries(points))relationPlot.querySelector(`[data-item="${key}"]`).setAttribute('transform',`translate(${xy[0]} ${xy[1]})`);
- for(const line of relationPlot.querySelectorAll('.rc-distance')){const p=points[line.dataset.from],q=points[line.dataset.to];line.setAttribute('x1',p[0]);line.setAttribute('y1',p[1]);line.setAttribute('x2',q[0]);line.setAttribute('y2',q[1]);line.classList.toggle('close',line.dataset.relation===relationMode);}
- const cluster=relationPlot.querySelector('.rc-cluster');for(const [key,value] of Object.entries(bounds))cluster.setAttribute(key,value);relationCluster=bounds;
+ for(const key of ['backpack','rod']){const distance=Math.hypot(points.hat[0]-points[key][0],points.hat[1]-points[key][1]);document.getElementById(`distance-bar-${key}`).style.width=`${distance/350*100}%`;}
  relationPositions=points;
 }
 function setRelation(mode){
@@ -89,8 +86,8 @@ function setRelation(mode){
  document.getElementById('distance-backpack').textContent=mode==='tennis'?'Closer':'Farther';document.getElementById('distance-rod').textContent=mode==='fishing'?'Closer':'Farther';
  if(relationFrame!==null)cancelAnimationFrame(relationFrame);
  if(reducedMotion.matches){paintRelation(structuredClone(relationTarget(mode)));relationFrame=null;return;}
- const from=structuredClone(relationPositions),to=relationTarget(mode),oldCluster={...relationCluster},newCluster=clusterBounds(to,mode);let start=null;
- function animate(now){if(start===null)start=now;const t=ease((now-start)/850);const next={};for(const key of Object.keys(from))next[key]=from[key].map((v,i)=>v+(to[key][i]-v)*t);const bounds={};for(const key of Object.keys(oldCluster))bounds[key]=oldCluster[key]+(newCluster[key]-oldCluster[key])*t;paintRelation(next,bounds);if(t<1)relationFrame=requestAnimationFrame(animate);else relationFrame=null;}
+ const from=structuredClone(relationPositions),to=relationTarget(mode);let start=null;
+ function animate(now){if(start===null)start=now;const t=ease((now-start)/850);const next={};for(const key of Object.keys(from))next[key]=from[key].map((v,i)=>v+(to[key][i]-v)*t);paintRelation(next);if(t<1)relationFrame=requestAnimationFrame(animate);else relationFrame=null;}
  relationFrame=requestAnimationFrame(animate);
 }
 function scheduleRelation(){clearTimeout(relationTimer);relationTimer=null;if(relationAuto&&relationVisible&&!document.hidden)relationTimer=setTimeout(()=>{setRelation(relationMode==='tennis'?'fishing':'tennis');scheduleRelation();},3600);}

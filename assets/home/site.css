@@ -96,3 +96,6 @@ section{padding:28px 0}.section-heading{margin-bottom:17px}h2{font-size:23px}.se
 
 /* Keep the graph label outside the animated drawing so contours cannot touch it. */
 .mw-graph-title{font:11px/1.5 var(--sans);color:var(--muted);margin:12px 0 0}.molworld-panel .molworld-svg{margin-top:8px}
+
+/* Pairwise embedding distances are shown separately from the scatterplots. */
+.embedding-distances>div{display:grid;grid-template-columns:minmax(0,1fr) 39px;gap:0 8px;margin-bottom:6px;align-items:center}.embedding-distances>div>span:first-child{grid-column:1/-1}.distance-track{height:4px;border-radius:3px;background:#e9ebef;overflow:hidden;display:block}.distance-track i{height:100%;display:block;background:#aeb7c5;border-radius:3px}.conditioned-panel .distance-track i{background:var(--relation-ink);opacity:.65}.embedding-distances b{text-align:right}.embedding-distances>div:last-child{margin-bottom:0}@media(max-width:540px){.embedding-distances>div{flex:1;grid-template-columns:minmax(0,1fr) 36px}.embedding-distances{gap:14px}}
