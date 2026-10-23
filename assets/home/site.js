@@ -19,7 +19,7 @@ const candidates=[...world.querySelectorAll('.mw-candidate')];
 const edges=[...world.querySelectorAll('.mw-verified-edge')];
 const anchors=[...world.querySelectorAll('.mw-anchor-ring,.mw-anchor-edge')];
 const mobileFigure=window.matchMedia('(max-width:540px)');
-function resizeFigure(){svg.setAttribute('viewBox',mobileFigure.matches?'0 0 460 905':'0 0 730 465');svg.classList.toggle('mobile-layout',mobileFigure.matches);}
+function resizeFigure(){svg.setAttribute('viewBox',mobileFigure.matches?'0 0 460 445':'0 0 730 445');svg.classList.toggle('mobile-layout',mobileFigure.matches);}
 mobileFigure.addEventListener('change',resizeFigure);resizeFigure();
 let elapsed=0,lastTime=null,frame=null,inView=false,paused=reducedMotion.matches;
 const clamp=n=>Math.max(0,Math.min(1,n));
@@ -48,7 +48,7 @@ function drawWorld(t){
   const labels=['Select a connected 5-molecule anchor context','Sample multiple candidates from the whole context','Verify MMP links to the current graph','Incorporate connected candidates; update the graph'];
   const index=local<3?0:local<6?1:local<9?2:3;
   stage.textContent=`Round ${round} · ${index+1}/4 · ${labels[index]}`;
-  world.querySelector('.mw-graph-caption').textContent=local<3?'The highlighted five molecules form one connected context.':local<6?'Candidates are sampled together; connections are not assigned yet.':local<9?'Links can reach molecules outside the selected anchor.':'Only candidates with a verified link to the current graph are added.';
+  world.querySelector('.mw-graph-caption').textContent=local<3?'The highlighted five molecules form one connected context.':local<6?'The five-molecule context conditions a batch of candidates.':local<9?'Most verified links return to the five anchors; a few reach other molecules.':'Only candidates with a verified link to the current graph are added.';
 }
 function updateButton(){toggle.textContent=paused?'Play':'Pause';toggle.setAttribute('aria-label',paused?'Play graph animation':'Pause graph animation');}
 function canRun(){return inView&&!document.hidden&&!paused;}

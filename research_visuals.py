@@ -14,15 +14,22 @@ def molworld_figure():
     nodes=[(75+(x-119)*2.25,18+(332-y)*2.25) for x,y in paper_nodes]
     initial_edges=[(0,1),(1,2),(2,3),(3,4),(4,0),(5,4),(6,0),(7,3),(8,3),(9,2),(10,1),(11,0),(5,7),(7,8)]
     anchor_sets=[{0,1,2,3,4},{0,4,5,11,15}]
-    verified_edges={1:[(3,12),(8,12),(6,13),(10,14),(11,15),(5,15)],
-                    2:[(5,17),(7,18),(10,19),(2,20),(9,20),(19,20)]}
+    # Illustrative dense anchor connectivity, clarified by the paper's author.
+    # Most accepted candidates link to four or five context molecules; a few links
+    # also reach other existing molecules. Verification still decides acceptance.
+    candidate_anchors={1:{12:[0,1,2,3,4],13:[0,1,3,4],14:[0,1,2,3,4],15:[0,1,2,4]},
+                       2:{17:[0,4,5,11,15],18:[0,4,5,15],19:[0,4,5,11,15],20:[0,4,11,15]}}
+    extra_edges={1:[(8,12),(6,13),(10,14),(11,15),(5,15)],
+                 2:[(7,18),(10,19),(2,20),(19,20)]}
+    verified_edges={r:[(a,n) for n,context in group.items() for a in context]+extra_edges[r]
+                    for r,group in candidate_anchors.items()}
     rejected = {16,21}
     def edge(a,b,classes,round_num=0):
         x,y=nodes[a];xx,yy=nodes[b]
         return f'<path class="{classes}" data-round="{round_num}" data-from="{a}" data-to="{b}" pathLength="1" d="M{x} {y}L{xx} {yy}"/>'
     lines = [edge(a,b,'mw-initial-edge') for a,b in initial_edges]
     for r,pairs in verified_edges.items():
-        lines += [edge(a,b,'mw-verified-edge',r) for a,b in pairs]
+        lines += [edge(a,b,'mw-verified-edge '+('mw-anchor-link' if a in anchor_sets[r-1] else 'mw-other-link'),r) for a,b in pairs]
     # Highlight only actual edges inside the chosen connected five-node context.
     anchor_edges=[]
     all_edges=initial_edges+verified_edges[1]
@@ -48,8 +55,8 @@ def molworld_figure():
         <path d="M546 {y}L563 {y}M580 {y}H603M603 {y}L624 {y}M601 {y-4}V{y-22}M605 {y-4}V{y-22}" stroke="#425650" stroke-width="1.5" fill="none"/>
         <text x="572" y="{y+4}" text-anchor="middle" class="chem">NH</text><text x="603" y="{y-27}" text-anchor="middle" class="chem">O</text>
         <circle cx="641" cy="{y}" r="21" fill="{('#f2ddd4' if variable=='H' else '#e5e2f2')}"/><text x="641" y="{y+5}" text-anchor="middle" class="chem">{variable}</text>'''
-    return f'''<svg viewBox="0 0 730 465" class="molworld-svg" role="img" aria-labelledby="mw-title mw-desc">
-    <title id="mw-title">Select a connected context, generate a batch, then verify its connections</title><desc id="mw-desc">Two illustrative rounds. Five connected molecules are selected from the current graph as an anchor context. Multiple candidates are sampled together without predetermined edges. MMP verification determines their links, including links to existing molecules outside the anchor and links between accepted candidates. Candidates without a verified connection to the current graph are not incorporated. A new five-node context can include previously accepted molecules.</desc>
+    return f'''<svg viewBox="0 0 730 445" class="molworld-svg" role="img" aria-labelledby="mw-title mw-desc">
+    <title id="mw-title">Select a connected context, generate a batch, then verify its connections</title><desc id="mw-desc">Two illustrative rounds. Five connected molecules are selected from the current graph as an anchor context. Multiple candidates are sampled together without predetermined edges. Accepted candidates typically connect to most or all five anchor molecules, with occasional additional links to other molecules. These illustrative links appear after MMP verification. Candidates without a verified connection to the current graph are not incorporated. A new five-node context can include previously accepted molecules.</desc>
     <defs><linearGradient id="mw-property-reference" x1="0%" x2="100%"><stop stop-color="#fff0ba"/><stop offset=".5" stop-color="#ffd59e"/><stop offset="1" stop-color="#ce2b1d"/></linearGradient><marker id="mw-property-tip" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#ce2b1d"/></marker><linearGradient id="mw-field-base" x2="1" y2="1"><stop stop-color="#f8f2e7"/><stop offset="1" stop-color="#f2e8d5"/></linearGradient><linearGradient id="mw-field-one" x2="1" y2="1"><stop stop-color="#f4ead7"/><stop offset="1" stop-color="#e9d8bd"/></linearGradient><linearGradient id="mw-field-two" x2="1" y2="1"><stop stop-color="#f2e5de"/><stop offset="1" stop-color="#e6cfc3"/></linearGradient><marker id="mw-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#7f9084"/></marker></defs>
     <g class="mw-graph">
     <path class="mw-region mw-region-2" d="{contours[2]}"/><path class="mw-region mw-region-1" d="{contours[1]}"/><path class="mw-region mw-region-0" d="{contours[0]}"/>
@@ -57,7 +64,6 @@ def molworld_figure():
     </g>
     <text x="24" y="18" class="figure-small">Current molecule-transfer graph</text>
     <rect x="145" y="408" width="174" height="6" fill="url(#mw-property-reference)"/><path d="M315 411H330" stroke="#ce2b1d" stroke-width="6" marker-end="url(#mw-property-tip)"/><text x="237" y="432" text-anchor="middle" class="figure-small">Higher property</text>
-    <text x="24" y="453" class="figure-small mw-graph-caption">Verified connections determine the expansion.</text>
     <g class="mw-inset"><text x="490" y="43" class="figure-heading">What does an edge mean?</text><text x="490" y="65" class="figure-small">A verified local structural modification</text>
     {structure(124,'H')}{structure(226,'CH₃')}
     <path d="M575 163V181" stroke="#5d6965" marker-end="url(#mw-arrow)"/><text x="585" y="177" class="figure-small">H → CH₃</text>
