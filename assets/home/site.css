@@ -126,3 +126,22 @@ section{padding:28px 0}.section-heading{margin-bottom:17px}h2{font-size:23px}.se
 .milnet-evidence>img{display:block;width:100%;height:auto;border-radius:4px}
 .milnet-evidence>a{display:inline-block;margin-top:7px;font-size:10px;color:#6b809d;text-decoration:none}
 @media(max-width:540px){.milnet-cue-notes{grid-template-columns:1fr;gap:10px}.milnet-cue-notes p{font-size:10px}.milnet-evidence summary{font-size:10px}}
+
+/* XAI: make the two evidence sources and the correction mechanism explicit. */
+#xai-refine .xai-loop{max-width:565px;width:100%;margin:0 auto 4px}
+.xai-loop .xai-route{fill:none;stroke:#8999af;stroke-width:1.4}
+.xai-loop .xai-block rect{fill:#fff;stroke:#d8e1ec;stroke-width:1.2}
+.xai-loop .xai-model-side rect{fill:#f0f2fa;stroke:#d8dff0}
+.xai-loop .xai-domain-side rect{fill:#edf5f4;stroke:#cbdedb}
+.xai-loop .xai-domain-side .xai-block-title{fill:#406e6a}
+.xai-loop .xai-comparison rect{fill:#f4f6fa;stroke:#d0daea}
+.xai-loop .xai-regularizer rect,.xai-loop .xai-update rect{fill:#eef4fb;stroke:#b9cce2}
+.xai-loop .xai-block-title{font:600 15px var(--sans);fill:#3f5678}
+.xai-loop .xai-block-detail{font:12px var(--sans);fill:#6d7e93}
+.xai-loop .xai-connector-label{font:12px var(--sans);fill:#6d7e93;paint-order:stroke;stroke:#fbfcfe;stroke-width:7px;stroke-linejoin:round}
+.xai-loop .xai-loss{font:600 14px var(--sans);fill:#54779f}
+.xai-loop .xai-cycle-label{font:11px var(--sans);fill:#6b86aa}
+.xai-feedback-pulse{fill:none;stroke:#4e79ad;stroke-width:3;stroke-linecap:round;stroke-dasharray:8 92;animation:xai-return-flow 3s linear infinite;animation-play-state:paused;opacity:0}
+.has-loop-motion .xai-feedback-pulse{opacity:1}.loop-running .xai-feedback-pulse{animation-play-state:running}
+@keyframes xai-return-flow{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+@media(max-width:540px){#xai-refine .xai-loop{max-width:none}.xai-loop .xai-block-title{font-size:16px}.xai-loop .xai-block-detail{font-size:13px}}

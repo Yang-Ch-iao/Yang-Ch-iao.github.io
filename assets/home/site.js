@@ -21,46 +21,49 @@ const anchors=[...world.querySelectorAll('.mw-anchor-ring,.mw-anchor-edge')];
 const mobileFigure=window.matchMedia('(max-width:540px)');
 function resizeFigure(){svg.setAttribute('viewBox',mobileFigure.matches?'0 0 460 445':'0 0 730 445');svg.classList.toggle('mobile-layout',mobileFigure.matches);}
 mobileFigure.addEventListener('change',resizeFigure);resizeFigure();
+const ROUND_SECONDS=4,CYCLE_SECONDS=ROUND_SECONDS*2;
 let elapsed=0,lastTime=null,frame=null,inView=false,paused=reducedMotion.matches;
 const clamp=n=>Math.max(0,Math.min(1,n));
 const ease=n=>{n=clamp(n);return n*n*(3-2*n);};
 function drawWorld(t){
+  // Fade generated content into the initial graph without a hold between cycles.
+  const cycleFade=t<CYCLE_SECONDS?1-ease((t-(CYCLE_SECONDS-.35))/.35):1;
   for(const node of candidates){
-    const local=t-(Number(node.dataset.round)-1)*12;
+    const local=t-(Number(node.dataset.round)-1)*ROUND_SECONDS;
     const rejected=node.classList.contains('mw-rejected');
-    const appear=ease((local-3)/.7);
-    node.style.opacity=String(appear*(rejected?1-ease((local-8.4)/.7):1));
-    node.classList.toggle('verified',local>=7.2&&!rejected);
-    node.classList.toggle('rejected',local>=7.2&&rejected);
+    const appear=ease((local-.35)/.85);
+    node.style.opacity=String(cycleFade*appear*(rejected?1-ease((local-2.6)/.4):1));
+    node.classList.toggle('verified',local>=2.6&&!rejected);
+    node.classList.toggle('rejected',local>=2.6&&rejected);
     node.querySelector('.mw-dot').setAttribute('r',String(6.5*(.8+.2*appear)));
   }
   for(const edge of edges){
-    const local=t-(Number(edge.dataset.round)-1)*12;
-    const progress=ease((local-6)/1.2);
-    edge.style.opacity=String(progress>0?1:0);
+    const local=t-(Number(edge.dataset.round)-1)*ROUND_SECONDS;
+    const progress=ease((local-1.1)/1.5);
+    edge.style.opacity=String(progress>0?cycleFade:0);
     edge.style.strokeDasharray='1';edge.style.strokeDashoffset=String(1-progress);
   }
   for(const anchor of anchors){
-    const local=t-(Number(anchor.dataset.round)-1)*12;
-    anchor.style.opacity=String(ease(local/.7)*(1-ease((local-9)/.8)));
+    const local=t-(Number(anchor.dataset.round)-1)*ROUND_SECONDS;
+    anchor.style.opacity=String(ease(local/.35)*(1-ease((local-2.9)/1.1)));
   }
-  const round=t<12?1:2,local=t-(round-1)*12;
+  const round=t<ROUND_SECONDS?1:2,local=t-(round-1)*ROUND_SECONDS;
   const labels=['Select a connected 5-molecule anchor context','Sample multiple candidates from the whole context','Verify MMP links to the current graph','Incorporate connected candidates; update the graph'];
-  const index=local<3?0:local<6?1:local<9?2:3;
+  const index=local<.35?0:local<1.1?1:local<2.6?2:3;
   stage.textContent=`Round ${round} · ${index+1}/4 · ${labels[index]}`;
-  world.querySelector('.mw-graph-caption').textContent=local<3?'The highlighted five molecules form one connected context.':local<6?'The five-molecule context conditions a batch of candidates.':local<9?'Most verified links return to the five anchors; a few reach other molecules.':'Only candidates with a verified link to the current graph are added.';
+  world.querySelector('.mw-graph-caption').textContent=local<.35?'The highlighted five molecules form one connected context.':local<1.1?'The five-molecule context conditions a batch of candidates.':local<2.6?'Most verified links return to the five anchors; a few reach other molecules.':'Only candidates with a verified link to the current graph are added.';
 }
 function updateButton(){toggle.textContent=paused?'Play':'Pause';toggle.setAttribute('aria-label',paused?'Play graph animation':'Pause graph animation');}
 function canRun(){return inView&&!document.hidden&&!paused;}
-function tick(now){frame=null;if(!canRun()){lastTime=null;return;}if(lastTime!==null)elapsed+=(now-lastTime)/1000;lastTime=now;drawWorld(Math.min(elapsed,24));if(elapsed>=25){elapsed=24;paused=true;updateButton();lastTime=null;return;}frame=requestAnimationFrame(tick);}
+function tick(now){frame=null;if(!canRun()){lastTime=null;return;}if(lastTime!==null)elapsed=(elapsed+(now-lastTime)/1000)%CYCLE_SECONDS;lastTime=now;drawWorld(elapsed);frame=requestAnimationFrame(tick);}
 function syncPlayback(){if(canRun()&&frame===null){lastTime=null;frame=requestAnimationFrame(tick);}else if(!canRun()){if(frame!==null)cancelAnimationFrame(frame);frame=null;lastTime=null;}}
-controls.hidden=false;elapsed=reducedMotion.matches?24:0;drawWorld(elapsed);updateButton();
-toggle.addEventListener('click',()=>{if(paused&&elapsed>=24){elapsed=0;drawWorld(0);}paused=!paused;updateButton();syncPlayback();});
+controls.hidden=false;elapsed=reducedMotion.matches?CYCLE_SECONDS:0;drawWorld(elapsed);updateButton();
+toggle.addEventListener('click',()=>{if(paused&&elapsed>=CYCLE_SECONDS){elapsed=0;drawWorld(0);}paused=!paused;updateButton();syncPlayback();});
 document.getElementById('world-replay').addEventListener('click',()=>{elapsed=0;drawWorld(0);paused=false;updateButton();syncPlayback();});
-document.getElementById('world-next').addEventListener('click',()=>{const steps=[1,4,7.8,10.5,13,16,19.8,22.5];elapsed=steps.find(t=>t>elapsed+.1)??1;paused=true;drawWorld(elapsed);updateButton();syncPlayback();});
+document.getElementById('world-next').addEventListener('click',()=>{const steps=[.25,.9,2.5,3.2,4.25,4.9,6.5,7.2];elapsed=steps.find(t=>t>elapsed+.1)??.25;paused=true;drawWorld(elapsed);updateButton();syncPlayback();});
 new IntersectionObserver(entries=>{inView=entries[0].isIntersecting;syncPlayback();},{threshold:.15}).observe(svg);
 document.addEventListener('visibilitychange',syncPlayback);
-reducedMotion.addEventListener('change',()=>{if(reducedMotion.matches){paused=true;elapsed=24;drawWorld(elapsed);updateButton();syncPlayback();}});
+reducedMotion.addEventListener('change',()=>{if(reducedMotion.matches){paused=true;elapsed=CYCLE_SECONDS;drawWorld(elapsed);updateButton();syncPlayback();}});
 
 // RCML: shared sample identities move between illustrative relation-specific spaces.
 const relationCard=document.getElementById('multimodal');

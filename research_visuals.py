@@ -103,17 +103,28 @@ def rcml_figure(baseline=False):
         desc='For tennis, the sun hat is nearer the backpack in embedding space. For fishing, it is nearer the rod combo. Positions and pairwise distances change with the relation; positions are illustrative.'
     return f'''<svg class="embedding-space {'relation-baseline' if baseline else 'relation-space'}" viewBox="0 0 350 300" role="img" aria-labelledby="{prefix}-title {prefix}-desc"><title id="{prefix}-title">{title}</title><desc id="{prefix}-desc">{desc}</desc><defs>{clips}<pattern id="{prefix}-grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".65" fill="#dce0e5"/></pattern></defs><rect x="4" y="4" width="342" height="288" rx="6" fill="url(#{prefix}-grid)"/>{nodes}</svg>'''
 
-XAI = '''<svg viewBox="0 0 370 280" class="support-svg xai-loop" role="img" aria-labelledby="xai-title xai-desc"><title id="xai-title">XAI-Refine: a closed explanation–knowledge loop</title><desc id="xai-desc">Extract reliable explanations, verify them against literature, derive a minimal revision and training constraint, then validate the candidate model. Only accepted updates return to explanation discovery for the next iteration.</desc>
-<defs><marker id="xai-loop-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#8c9bb5"/></marker><marker id="xai-return-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#627aa6"/></marker></defs>
-<path class="xai-track" d="M185 32C250 32 303 75 303 139C303 203 250 247 185 247C120 247 67 203 67 139C67 75 120 32 185 32Z"/>
-<g class="xai-arrows" marker-end="url(#xai-loop-arrow)"><path d="M250 47Q303 61 303 106"/><path d="M303 172Q288 236 258 247"/><path d="M113 247Q67 230 67 172"/></g>
-<path class="xai-feedback" d="M67 105Q67 47 112 32" marker-end="url(#xai-return-arrow)"/>
-<circle class="xai-flow-dot" r="3.5"/>
-<g class="xai-step"><rect x="120" y="5" width="130" height="54" rx="7"/><text x="185" y="27" class="xai-step-title">01 · Explain</text><text x="185" y="44" class="xai-step-detail">Reliable model patterns</text></g>
-<g class="xai-step"><rect x="238" y="112" width="130" height="54" rx="7"/><text x="303" y="134" class="xai-step-title">02 · Verify</text><text x="303" y="151" class="xai-step-detail">Applicable literature</text></g>
-<g class="xai-step"><rect x="120" y="220" width="130" height="54" rx="7"/><text x="185" y="242" class="xai-step-title">03 · Revise</text><text x="185" y="259" class="xai-step-detail">Minimal change → constraint</text></g>
-<g class="xai-step xai-validation"><rect x="2" y="112" width="130" height="54" rx="7"/><text x="67" y="134" class="xai-step-title">04 · Validate</text><text x="67" y="151" class="xai-step-detail">Prediction + drift checks</text></g>
-<text x="185" y="120" class="xai-center">Accepted update</text><text x="185" y="142" class="xai-model">t → t + 1</text><text x="185" y="161" class="xai-center-note">Explain again</text><text x="26" y="68" class="xai-return-label">Next iteration</text>
+XAI = '''<svg viewBox="0 0 530 520" class="support-svg xai-loop" role="img" aria-labelledby="xai-title xai-desc">
+<title id="xai-title">XAI-Refine: domain knowledge guides model correction</title>
+<desc id="xai-desc">Reliable model explanations yield model claims. Retrieved and verified scientific literature yields domain claims. Compare the claims on the same variable, measurement and scope; minimally revise the model explanation to satisfy the evidence. Translate the revision into a new regularization term, refine the predictor, and validate prediction, targeted change and non-target drift. Only accepted models return to explanation discovery.</desc>
+<defs><marker id="xai-loop-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#8999af"/></marker><marker id="xai-return-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#6082ac"/></marker></defs>
+<g class="xai-route" marker-end="url(#xai-loop-arrow)">
+<path d="M156 76V116"/><path d="M396 76V116"/>
+<path d="M156 178V197H278V218"/><path d="M396 178V197H278" marker-end="none"/>
+<path d="M278 280V299H156V318"/><path d="M260 351H292"/>
+<path d="M396 384V401H278V420"/>
+</g>
+<path class="xai-feedback" d="M94 462H34Q24 462 24 450V57Q24 47 34 47H52" marker-end="url(#xai-return-arrow)"/>
+<path class="xai-feedback-pulse" d="M94 462H34Q24 462 24 450V57Q24 47 34 47H52" pathLength="100"/>
+<text class="xai-cycle-label" x="12" y="268" transform="rotate(-90 12 268)">Re-explain the accepted model</text>
+<g class="xai-block xai-model-side"><rect x="52" y="18" width="208" height="58" rx="7"/><text class="xai-block-title" x="156" y="43">Current model · fₜ</text><text class="xai-block-detail" x="156" y="63">Learned brain-age predictor</text></g>
+<g class="xai-block xai-domain-side"><rect x="292" y="18" width="208" height="58" rx="7"/><text class="xai-block-title" x="396" y="43">Domain knowledge</text><text class="xai-block-detail" x="396" y="63">Scientific literature</text></g>
+<text class="xai-connector-label" x="156" y="101">Reliable explanations</text><text class="xai-connector-label" x="396" y="101">Retrieve &amp; verify</text>
+<g class="xai-block xai-model-side"><rect x="52" y="116" width="208" height="62" rx="7"/><text class="xai-block-title" x="156" y="142">Model claims</text><text class="xai-block-detail" x="156" y="163">What the model has learned</text></g>
+<g class="xai-block xai-domain-side"><rect x="292" y="116" width="208" height="62" rx="7"/><text class="xai-block-title" x="396" y="142">Verified domain claims</text><text class="xai-block-detail" x="396" y="163">Evidence-consistent relations</text></g>
+<g class="xai-block xai-comparison"><rect x="94" y="218" width="368" height="62" rx="7"/><text class="xai-block-title" x="278" y="244">Compare model ↔ domain claims</text><text class="xai-block-detail" x="278" y="265">Align variable, measurement &amp; scope; identify the gap</text></g>
+<g class="xai-block"><rect x="52" y="318" width="208" height="66" rx="7"/><text class="xai-block-title" x="156" y="344">Minimal claim revision</text><text class="xai-block-detail" x="156" y="365">Nearest admissible relation</text></g>
+<g class="xai-block xai-regularizer"><rect x="292" y="318" width="208" height="66" rx="7"/><text class="xai-block-title" x="396" y="344">New regularization · Rₜ</text><text class="xai-block-detail" x="396" y="365">Penalize deviation from revision</text></g>
+<g class="xai-block xai-update"><rect x="94" y="420" width="368" height="82" rx="7"/><text class="xai-block-title" x="278" y="445">Refine model · fₜ → fₜ₊₁</text><text class="xai-loss" x="278" y="468">Prediction loss + λRₜ</text><text class="xai-block-detail" x="278" y="490">Accept after prediction, revision &amp; drift checks</text></g>
 </svg>'''
 
 MILNET = '''<div class="milnet-story">
