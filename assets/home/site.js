@@ -68,13 +68,11 @@ const relationPlot=relationCard.querySelector('.relation-space');
 const relationButtons=[...relationCard.querySelectorAll('[data-embedding-relation]')];
 const relationPlay=document.getElementById('relation-play');
 const relationLayouts={
- tennis:{hat:[300,100],backpack:[150,180],racket:[300,260],rod:[550,100],reel:[550,260]},
- fishing:{hat:[400,100],backpack:[150,100],racket:[150,260],rod:[550,180],reel:[400,260]}
+ tennis:{hat:[155,85],backpack:[65,145],racket:[155,215],rod:[285,65],reel:[285,235]},
+ fishing:{hat:[195,85],backpack:[65,65],racket:[65,235],rod:[285,145],reel:[195,215]}
 };
-const relationCompact=window.matchMedia('(max-width:540px)');
-const mobileRelationLayouts={tennis:{hat:[130,245],backpack:[230,100],racket:[330,245],rod:[130,430],reel:[330,430]},fishing:{hat:[130,245],backpack:[130,430],racket:[330,430],rod:[230,100],reel:[330,245]}};
-function relationTarget(mode){return (relationCompact.matches?mobileRelationLayouts:relationLayouts)[mode];}
-function clusterBounds(points,mode){const group=mode==='tennis'?['hat','backpack','racket']:['hat','rod','reel'];const xs=group.map(k=>points[k][0]),ys=group.map(k=>points[k][1]);return {cx:(Math.min(...xs)+Math.max(...xs))/2,cy:(Math.min(...ys)+Math.max(...ys))/2,rx:(Math.max(...xs)-Math.min(...xs))/2+85,ry:(Math.max(...ys)-Math.min(...ys))/2+82};}
+function relationTarget(mode){return relationLayouts[mode];}
+function clusterBounds(points,mode){const group=mode==='tennis'?['hat','backpack','racket']:['hat','rod','reel'];const xs=group.map(k=>points[k][0]),ys=group.map(k=>points[k][1]);return {cx:(Math.min(...xs)+Math.max(...xs))/2,cy:(Math.min(...ys)+Math.max(...ys))/2,rx:(Math.max(...xs)-Math.min(...xs))/2+56,ry:(Math.max(...ys)-Math.min(...ys))/2+54};}
 const relationCopy={tennis:['Tennis-related co-purchases','Tennis shoppers connect the backpack with the racket and sun hat.'],fishing:['Fishing-related co-purchases','Fishing shoppers connect the rod combo with the reel and the same sun hat.']};
 let relationMode='tennis',relationPositions=structuredClone(relationTarget('tennis')),relationFrame=null,relationTimer=null,relationVisible=false,relationAuto=!reducedMotion.matches;
 let relationCluster=clusterBounds(relationPositions,relationMode);
@@ -102,5 +100,4 @@ relationPlay.hidden=false;relationPlay.addEventListener('click',()=>{relationAut
 new IntersectionObserver(entries=>{relationVisible=entries[0].isIntersecting;scheduleRelation();},{threshold:.1}).observe(relationPlot);
 document.addEventListener('visibilitychange',scheduleRelation);
 reducedMotion.addEventListener('change',()=>{if(reducedMotion.matches){relationAuto=false;relationButton();scheduleRelation();setRelation(relationMode);}});
-function resizeRelation(){if(relationFrame!==null)cancelAnimationFrame(relationFrame);relationFrame=null;relationPlot.setAttribute('viewBox',relationCompact.matches?'0 0 460 550':'0 0 700 400');const grid=relationPlot.querySelector('.rc-grid-frame');grid.setAttribute('width',relationCompact.matches?'440':'680');grid.setAttribute('height',relationCompact.matches?'520':'370');relationPlot.querySelector('.rc-space-note').setAttribute('y',relationCompact.matches?'540':'390');paintRelation(structuredClone(relationTarget(relationMode)));}
-relationCompact.addEventListener('change',resizeRelation);relationButton();resizeRelation();
+relationButton();paintRelation(structuredClone(relationTarget(relationMode)));

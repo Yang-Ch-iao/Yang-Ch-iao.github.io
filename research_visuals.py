@@ -72,32 +72,42 @@ def molworld_figure():
     <circle cx="506" cy="365" r="6.5" fill="white" stroke="#8d9891" stroke-dasharray="2 2"/><text x="533" y="369" class="figure-small">Candidate awaiting verification</text></g>
     </svg>'''
 
-ENTERPRISE = '''<div class="es-case" aria-label="Northstar evidence example from EnterpriseSaga Figure 1">
-<div class="es-kicker"><span>ACROSS SYSTEMS &amp; TIME</span><span class="es-account">Northstar</span></div>
-<p class="es-question">What caused the duplicate charges,<br class="es-question-break"> and how were they resolved?</p>
-<ol class="es-records" aria-label="Evidence in chronological order">
-<li><div class="es-source"><span class="es-source-icon" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M5.5 15h9a3.5 3.5 0 0 0 .4-7 5 5 0 0 0-9.6-1A4 4 0 0 0 5.5 15Z"/></svg></span><span>Salesforce</span><span class="es-ref">1</span></div><time class="es-date">MAY 06</time><h4>Billing update</h4><p>Duplicate charges linked to the May billing update.</p></li>
-<li><div class="es-source"><span class="es-source-icon" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M7 3 5 17M15 3l-2 14M3 7h14M3 13h14"/></svg></span><span>Slack</span><span class="es-ref">2</span></div><time class="es-date">MAY 07</time><h4>Retry charges</h4><p>Automatic retries charged the customer twice.</p></li>
-<li><div class="es-source"><span class="es-source-icon" aria-hidden="true"><svg viewBox="0 0 20 20"><rect x="2.5" y="4.5" width="15" height="11" rx="2"/><path d="m3 5 7 6 7-6"/></svg></span><span>Email</span><span class="es-ref">3</span></div><time class="es-date">MAY 09</time><h4>Resolution</h4><p>Retries disabled;<br>refunds issued.</p></li>
-</ol>
-<div class="es-answer"><div class="es-answer-label"><span aria-hidden="true">↳</span> EVIDENCE-GROUNDED ANSWER</div><p>Automatic retries caused duplicate charges <span class="es-cite">2</span>. Retries were disabled and refunds issued <span class="es-cite">3</span>.</p></div>
-<div class="es-distractors"><div class="es-distractor-label">SIMILAR RECORDS · DIFFERENT CONTEXT</div><div class="es-decoys"><p><span>Earlier issue</span>Invoice-layout changes</p><p><span>Proposal only</span>Manual review</p></div></div>
+ENTERPRISE = '''<div class="es-framework" aria-label="EnterpriseSaga coarse-to-fine construction framework, adapted from Figure 2">
+<div class="es-metrics"><div><strong>1.213B</strong><span>tokens</span></div><div><strong>18</strong><span>months</span></div><div><strong>12</strong><span>systems</span></div><div><strong>966</strong><span>questions</span></div></div>
+<div class="es-framework-heading"><span>01</span><strong>Simulate a shared company history</strong></div>
+<div class="es-construction">
+<div class="es-company"><div class="es-mini-label">COMPANY CONTEXT</div><strong>People &amp; roles</strong><span>Business objectives<br>Dated changes</span></div>
+<div class="es-branches"><div class="es-branch"><strong>Project planning</strong><span>Projects → subprojects → episodes</span></div><div class="es-branch"><strong>Recurring operations</strong><span>Streams → archetypes → episodes</span></div></div>
+<div class="es-artifacts"><div class="es-mini-label">ACTIVITY-GROUNDED ARTIFACTS</div><strong>Shared facts,<br> different systems</strong><span>Slack · Jira · Email ·<br> Salesforce · +8 sources</span></div>
+</div>
+<div class="es-framework-heading es-qa-heading"><span>02</span><strong>Build questions with traceable evidence</strong></div>
+<div class="es-qa-grid">
+<div class="es-question-design"><div class="es-qa-type"><span>Multi-hop</span><div class="es-path" aria-label="One result identifies the next evidence"><i>A</i><b>→</b><i>B</i><b>→</b><i>C</i></div><small>Each result identifies the next evidence.</small></div><div class="es-qa-type"><span>Synthesis</span><div class="es-merge" aria-label="Combine complementary facts"><i>A</i><b>+</b><i>B</i><b>+</b><i>C</i><b>→</b><i>Answer</i></div><small>Combine facts within one business scope.</small></div></div>
+<div class="es-grounding"><div class="es-mini-label">VERIFIED SUPPORT</div><strong>Question ↔ claims ↔ files</strong><ul><li>Reference answers &amp; answer subfacts</li><li>Alternative sufficient evidence sets</li><li>Scoped search &amp; support verification</li></ul></div>
+</div>
+<div class="es-refinement"><span aria-hidden="true">↺</span><div><strong>Question-conditioned refinement</strong><p>Add comparable activities with different dates, versions, or participants. Check conflicts and unintended support; update evidence annotations.</p></div></div>
 </div>'''
 
-def rcml_figure():
-    # Original product photographs from RCML Figure 2(a), framed with SVG viewports.
-    items=[
-      ('hat','Sun hat',300,100,(375,277,109,75)),
-      ('backpack','Tennis backpack',150,180,(97,196,93,95)),
-      ('racket','Tennis racket',300,260,(405,68,97,102)),
-      ('rod','Fishing rod combo',550,100,(334,484,80,83)),
-      ('reel','Fishing reel',550,260,(98,425,80,93))]
-    nodes=''.join(f'<g class="rc-item" data-item="{key}" transform="translate({x} {y})"><title>{label}</title><circle class="rc-item-disc" r="42"/><svg x="{-31*cw/max(cw,ch):.2f}" y="{-31*ch/max(cw,ch):.2f}" width="{62*cw/max(cw,ch):.2f}" height="{62*ch/max(cw,ch):.2f}" viewBox="{cx} {cy} {cw} {ch}" preserveAspectRatio="xMidYMid meet" overflow="hidden"><image href="images/research/rcml-figure2.png" width="2834" height="1082" clip-path="url(#rc-photo-{key})"/></svg><text y="62" text-anchor="middle">{label}</text></g>' for key,label,x,y,(cx,cy,cw,ch) in items)
-    photo_clips=''.join(f'<clipPath id="rc-photo-{key}"><rect x="{cx}" y="{cy}" width="{cw}" height="{ch}"/></clipPath>' if key!='hat' else '<clipPath id="rc-photo-hat"><path d="M406 277H484V352H375V323L402 310Z"/></clipPath>' for key,_,_,_,(cx,cy,cw,ch) in items)
-    points={key:(x,y) for key,_,x,y,_ in items}
-    pairs=[('backpack','racket','tennis'),('backpack','hat','tennis'),('rod','reel','fishing'),('rod','hat','fishing')]
-    lines=''.join(f'<line class="rc-distance {"close" if relation=="tennis" else ""}" data-from="{a}" data-to="{b}" data-relation="{relation}" x1="{points[a][0]}" y1="{points[a][1]}" x2="{points[b][0]}" y2="{points[b][1]}"/>' for a,b,relation in pairs)
-    return f'''<svg class="relation-space" viewBox="0 0 700 400" role="img" aria-labelledby="rc-title rc-desc"><title id="rc-title">Tennis and fishing relations from RCML Figure 2(a)</title><desc id="rc-desc">For tennis-related co-purchases, the backpack connects to the racket and sun hat. For fishing-related co-purchases, the fishing rod connects to the reel and the same sun hat. Product photos and positive pairs come from the model diagram; embedding positions are illustrative.</desc><defs>{photo_clips}<pattern id="rc-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".7" fill="#e1ddd6"/></pattern></defs><rect class="rc-grid-frame" x="10" y="10" width="680" height="370" rx="12" fill="url(#rc-grid)"/><ellipse class="rc-cluster" cx="225" cy="180" rx="160" ry="162"/>{lines}{nodes}<text class="rc-space-note" x="24" y="390">Same products · relation-specific embeddings</text></svg>'''
+def rcml_figure(baseline=False):
+    # Figure 1's fixed-vs-conditioned contrast, with Figure 2(a)'s product photos.
+    prefix='rc-base' if baseline else 'rc'
+    positions=({'hat':(175,145),'backpack':(65,65),'racket':(65,235),'rod':(285,65),'reel':(285,235)} if baseline else
+               {'hat':(155,85),'backpack':(65,145),'racket':(155,215),'rod':(285,65),'reel':(285,235)})
+    items=[('hat','Sun hat',(375,277,109,75)),('backpack','Backpack',(97,196,93,95)),('racket','Racket',(405,68,97,102)),('rod','Rod combo',(334,484,80,83)),('reel','Reel',(98,425,80,93))]
+    nodes=''.join(f'<g class="rc-item" data-item="{key}" transform="translate({positions[key][0]} {positions[key][1]})"><title>{label}</title><circle class="rc-item-disc" r="27"/><svg x="{-20*cw/max(cw,ch):.2f}" y="{-20*ch/max(cw,ch):.2f}" width="{40*cw/max(cw,ch):.2f}" height="{40*ch/max(cw,ch):.2f}" viewBox="{cx} {cy} {cw} {ch}" preserveAspectRatio="xMidYMid meet" overflow="hidden"><image href="images/research/rcml-figure2.png" width="2834" height="1082" clip-path="url(#{prefix}-photo-{key})"/></svg><text y="44" text-anchor="middle">{label}</text></g>' for key,label,(cx,cy,cw,ch) in items)
+    clips=''.join(f'<clipPath id="{prefix}-photo-{key}"><rect x="{cx}" y="{cy}" width="{cw}" height="{ch}"/></clipPath>' if key!='hat' else f'<clipPath id="{prefix}-photo-hat"><path d="M406 277H484V352H375V323L402 310Z"/></clipPath>' for key,_,(cx,cy,cw,ch) in items)
+    if baseline:
+        lines=''.join(f'<line class="rc-fixed-distance" x1="175" y1="145" x2="{positions[k][0]}" y2="{positions[k][1]}"/>' for k in ['backpack','rod'])
+        title='Traditional relation-agnostic embeddings stay fixed'
+        desc='The same five products have one fixed set of embeddings and distances, reused for tennis and fishing relations. Positions are illustrative.'
+        cluster=''
+    else:
+        pairs=[('backpack','racket','tennis'),('backpack','hat','tennis'),('rod','reel','fishing'),('rod','hat','fishing')]
+        lines=''.join(f'<line class="rc-distance {"close" if relation=="tennis" else ""}" data-from="{a}" data-to="{b}" data-relation="{relation}" x1="{positions[a][0]}" y1="{positions[a][1]}" x2="{positions[b][0]}" y2="{positions[b][1]}"/>' for a,b,relation in pairs)
+        title='RCML embeddings change with the selected relation'
+        desc='For tennis, the backpack connects to the racket and sun hat. For fishing, the rod connects to the reel and the same sun hat. The embeddings move with the relation; positions are illustrative.'
+        cluster='<ellipse class="rc-cluster" cx="110" cy="150" rx="101" ry="119"/>'
+    return f'''<svg class="embedding-space {'relation-baseline' if baseline else 'relation-space'}" viewBox="0 0 350 300" role="img" aria-labelledby="{prefix}-title {prefix}-desc"><title id="{prefix}-title">{title}</title><desc id="{prefix}-desc">{desc}</desc><defs>{clips}<pattern id="{prefix}-grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".65" fill="#dce0e5"/></pattern></defs><rect x="4" y="4" width="342" height="288" rx="6" fill="url(#{prefix}-grid)"/>{cluster}{lines}{nodes}</svg>'''
 
 XAI = '''<svg viewBox="0 0 370 188" class="support-svg" role="img" aria-label="XAI-Refine: model explanations are verified against literature, converted into minimal targeted constraints, and validated before the model is updated."><defs><marker id="xai-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#858b7c"/></marker></defs><g fill="#fafbf7" stroke="#d8ddd2"><rect x="10" y="15" width="150" height="55" rx="5"/><rect x="210" y="15" width="150" height="55" rx="5"/><rect x="210" y="110" width="150" height="55" rx="5"/><rect x="10" y="110" width="150" height="55" rx="5"/></g><g class="support-label" text-anchor="middle"><text x="85" y="39">Reliable explanations</text><text x="85" y="56" class="figure-small">from the current model</text><text x="285" y="39">Verify with literature</text><text x="285" y="56" class="figure-small">evidence and scope</text><text x="285" y="133">Minimal revision</text><text x="285" y="151" class="figure-small">targeted constraints</text><text x="85" y="133">Validate & update</text><text x="85" y="151" class="figure-small">accuracy + off-target checks</text></g><g stroke="#858b7c" fill="none" marker-end="url(#xai-arrow)"><path d="M161 42H201"/><path d="M285 71V101"/><path d="M209 137H169"/><path d="M85 109V79"/></g></svg>'''
 
