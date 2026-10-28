@@ -77,16 +77,16 @@ def molworld_figure():
     </svg>'''
 
 ENTERPRISE = '''<figure class="saga-figure" aria-label="EnterpriseSaga construction: Clearpath’s shared company history, activity-grounded records, questions and evidence, followed by question-conditioned augmentation">
-<div class="saga-history"><strong>Clearpath</strong><p>A simulated B2B SaaS company<br>Customer-support &amp; service-operations software</p></div>
+<div class="saga-history"><strong>Clearpath</strong><p>A simulated B2B SaaS company for customer support and service operations.</p></div>
 <div class="saga-scale">18 months <span>·</span> 12 systems <span>·</span> 1.213B tokens</div>
-<div class="saga-activities">
+<div class="saga-generation"><div class="saga-activities">
 <div><strong>Projects</strong><span>Projects → subprojects → episodes</span></div>
 <div><strong>Recurring operations</strong><span>Streams → archetypes → episodes</span></div>
 </div>
-<svg class="saga-join" viewBox="0 0 480 32" preserveAspectRatio="none" aria-hidden="true"><path d="M120 1V14Q120 18 124 18H356Q360 18 360 14V1M240 18V30M236 26L240 30L244 26"/></svg>
+<span class="saga-across" aria-hidden="true">→</span>
 <div class="saga-records"><strong>Shared facts, different records</strong><div class="saga-sources"><span>Slack</span><span>Jira</span><span>Email</span><span>Salesforce</span><span class="saga-other">+8 systems</span></div></div>
-<div class="saga-down" aria-hidden="true">↓</div>
-<div class="saga-questions"><strong>966 questions with traceable evidence</strong><div class="saga-question-types"><div><b>Multi-hop</b><span>Follow evidence from one record to the next.</span></div><div><b>Synthesis</b><span>Combine complementary facts within a shared scope.</span></div></div><p class="saga-support">Reference answers and claims linked to supporting files,<br>including alternative sufficient evidence sets.</p></div>
+</div>
+<div class="saga-questions"><strong>966 questions with traceable evidence</strong><div class="saga-question-types"><div><b>Multi-hop</b><span>Follow evidence from one record to the next.</span></div><div><b>Synthesis</b><span>Combine complementary facts within a shared scope.</span></div></div><p class="saga-support">Reference answers and claims link to supporting files, including alternative sufficient evidence sets.</p></div>
 <figcaption class="saga-augmentation"><strong>Question-conditioned augmentation</strong><p>Add comparable activities with different dates, versions, or participants; recheck conflicts and unintended support, then update the evidence annotations.</p></figcaption>
 </figure>'''
 
