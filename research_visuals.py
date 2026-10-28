@@ -76,9 +76,9 @@ def molworld_figure():
     <circle cx="506" cy="365" r="6.5" fill="#e2f0d9" stroke="#385623" stroke-dasharray="2 2"/><text x="533" y="369" class="figure-small">Candidate awaiting verification</text></g>
     </svg>'''
 
-ENTERPRISE = '''<figure class="saga-figure" aria-label="EnterpriseSaga construction: shared history, activity-grounded records, questions and evidence, followed by question-conditioned augmentation">
+ENTERPRISE = '''<figure class="saga-figure" aria-label="EnterpriseSaga construction: Clearpath’s shared company history, activity-grounded records, questions and evidence, followed by question-conditioned augmentation">
+<div class="saga-history"><strong>Clearpath</strong><p>A simulated B2B SaaS company<br>Customer-support &amp; service-operations software</p></div>
 <div class="saga-scale">18 months <span>·</span> 12 systems <span>·</span> 1.213B tokens</div>
-<div class="saga-history"><strong>One shared company history</strong><p>People, business objectives, and changes over time</p></div>
 <div class="saga-activities">
 <div><strong>Projects</strong><span>Projects → subprojects → episodes</span></div>
 <div><strong>Recurring operations</strong><span>Streams → archetypes → episodes</span></div>

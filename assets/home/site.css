@@ -284,10 +284,10 @@ footer{font:12px/1.7 var(--sans)}
 /* EnterpriseSaga reads as a single paper figure, without nested UI cards. */
 #enterprise>.diagram{background:transparent;border:0;padding:0 0 0 12px}
 .saga-figure{margin:0;color:#394859;font:12px/1.65 var(--sans);text-align:center}
-.saga-scale{font-size:11px;color:var(--muted);margin-bottom:21px}
+.saga-scale{font-size:11px;color:var(--muted);margin:10px 0 23px}
 .saga-scale span{margin:0 10px;color:#a0a7af}
-.saga-history>strong{font:400 20px/1.4 var(--serif);letter-spacing:-.3px;color:#344b64}
-.saga-history p{font-size:11px;color:var(--muted);margin:5px 0 15px}
+.saga-history>strong{font:600 24px/1.3 var(--sans);letter-spacing:-.5px;color:#344b64}
+.saga-history p{font-size:12px;line-height:1.65;color:var(--muted);margin:5px 0 0}
 .saga-activities{display:grid;grid-template-columns:1fr 1fr;gap:20px;position:relative;padding-top:17px}
 .saga-activities::before{content:'';position:absolute;left:25%;right:25%;top:0;height:10px;border:1px solid #b3bfca;border-bottom:0}
 .saga-activities::after{content:'';position:absolute;left:50%;top:-9px;height:9px;border-left:1px solid #b3bfca}
@@ -326,7 +326,7 @@ footer{font:12px/1.7 var(--sans)}
  .academic-details section{padding:22px 0 0}
  .academic-details{padding-bottom:25px}
  .saga-scale{font-size:10px}.saga-scale span{margin:0 6px}
- .saga-history>strong{font-size:18px}
+ .saga-history>strong{font-size:22px}
  .saga-activities{gap:12px}.saga-activities span{font-size:9px}
  .saga-sources{gap:16px}.saga-sources>span{font-size:10px}
  .saga-question-types{gap:20px}.saga-support br{display:none}
