@@ -60,3 +60,5 @@ MolWorld’s original peripheral molecules have local perimeter links, and every
 Featured-paper introductions are paraphrased from their abstracts and central method descriptions (EnterpriseSaga latest local manuscript; MolWorld v2; RCML; XAI-Refine; MILNet), emphasizing the problem and specific contribution rather than explaining UI controls. Desktop cards use 40% introduction / 60% figure columns; narrow screens retain stacked layouts.
 
 The homepage uses a centered reading column with a short, non-sticky row of section links below the biography. Desktop research entries pair unboxed introductions with separate figure panels; screens up to 900px stack the introduction above the figure. Section numbering and the fixed sidebar have been removed. Contact links and publication filters use text rather than pills.
+
+EnterpriseSaga and MolWorld receive larger project titles and fuller introductions. XAI-Refine, RCML and MILNet retain their core methods and complete interactive figures in more compact entries. The biography now describes recent work directly and links to the corresponding projects; no new research claims or personal history were introduced.
