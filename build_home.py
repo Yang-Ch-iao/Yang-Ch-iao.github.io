@@ -14,13 +14,14 @@ def external(label, url): return f'<a href="{esc(url)}" target="_blank" rel="noo
 def pub_html(p):
     title = external(esc(p['title']), p['url']) if p['url'] else esc(p['title'])
     authors = ''.join(('<strong>' + esc(t) + '</strong>') if i % 2 else esc(t) for i,t in enumerate(p['authors'].split('**')))
-    links = external('Paper',p['url']) if p['url'] else ''
+    links = ''
     if p['title'].startswith('EnterpriseSaga'): links = external('Project & leaderboard',data['enterprise'])
     status = '<p class="pub-status">Accepted · Findings of EMNLP 2026</p>' if 'accepted' in p['status'] else ''
     if 'revised' in p['status']:
         year = p['status'].split('revised ')[1].strip('.')
         status = f'<p class="pub-status">Revised {esc(year)}</p>'
-    return f'<article class="publication" data-category="{p["category"]}"><div class="venue">{p["venue"]}</div><div><h3 class="pub-title">{title}</h3><p class="authors">{authors}</p><div class="text-links">{links}</div>{status}</div></article>'
+    link_row = f'<div class="text-links">{links}</div>' if links else ''
+    return f'<article class="publication" data-category="{p["category"]}"><div class="venue">{p["venue"]}</div><div><h3 class="pub-title">{title}</h3><p class="authors">{authors}</p>{link_row}{status}</div></article>'
 
 pubs=''.join(pub_html(p) for p in data['publications'])
 html=f'''<!doctype html>
@@ -57,9 +58,7 @@ html=f'''<!doctype html>
 
 <section id="education">{heading('Education')}<div class="timeline-row"><h3>Emory University</h3><span class="date">2024 – present</span><p class="detail">Ph.D. in Computer Science and Informatics · Expected 2029<br>Advisor: Liang Zhao</p></div><div class="timeline-row"><h3>Shandong University</h3><span class="date">2021 – 2024</span><p class="detail">Master's in Computer Science and Technology<br>Advisor: Xuemeng Song · Co-advisor: Liqiang Nie</p></div><div class="timeline-row"><h3>Shandong University</h3><span class="date">2016 – 2020</span><p class="detail">B.Sc. in Physics</p></div></section>
 
-<section id="service">{heading('Academic service')}<div class="service-grid"><div><h3>Journal reviewer</h3><p>IEEE Transactions on Multimedia</p><p>IET Image Processing</p></div><div><h3>Conference reviewer</h3><p>NeurIPS</p></div></div></section>
-
-<section id="teaching">{heading('Teaching')}<p class="section-note">Teaching Assistant · Emory University</p><div class="teaching-line"><strong>CS 325 · Artificial Intelligence</strong><span class="date">Spring 2026 · Fall 2025</span></div><div class="teaching-line"><strong>CS 253 · Data Structures and Algorithms</strong><span class="date">Spring 2025</span></div></section>
+<div class="academic-details"><section id="teaching">{heading('Teaching')}<p class="section-note">Teaching Assistant · Emory University</p><div class="teaching-line"><strong>CS 325 · Artificial Intelligence</strong><span class="date">Spring 2026 · Fall 2025</span></div><div class="teaching-line"><strong>CS 253 · Data Structures and Algorithms</strong><span class="date">Spring 2025</span></div></section><section id="service">{heading('Academic service')}<p class="reviewing">Reviewer for <em>IEEE Transactions on Multimedia</em>, <em>IET Image Processing</em>, and NeurIPS.</p></section></div>
 <footer><a href="mailto:{data['email']}">{data['email']}</a><a class="back-top" href="#about">Back to top ↑</a></footer></main></body></html>'''
 (ROOT/'index.html').write_text(html)
 print('Built index.html with',len(data['publications']),'publications.')

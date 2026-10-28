@@ -76,21 +76,19 @@ def molworld_figure():
     <circle cx="506" cy="365" r="6.5" fill="#e2f0d9" stroke="#385623" stroke-dasharray="2 2"/><text x="533" y="369" class="figure-small">Candidate awaiting verification</text></g>
     </svg>'''
 
-ENTERPRISE = '''<div class="es-framework" aria-label="EnterpriseSaga coarse-to-fine construction framework, adapted from Figure 2">
-<div class="es-metrics"><div><strong>1.213B</strong><span>tokens</span></div><div><strong>18</strong><span>months</span></div><div><strong>12</strong><span>systems</span></div><div><strong>966</strong><span>questions</span></div></div>
-<div class="es-framework-heading"><span>01</span><strong>Simulate a shared company history</strong></div>
-<div class="es-construction">
-<div class="es-company"><div class="es-mini-label">COMPANY CONTEXT</div><strong>People &amp; roles</strong><span>Business objectives<br>Dated changes</span></div>
-<div class="es-branches"><div class="es-branch"><strong>Project planning</strong><span>Projects → subprojects → episodes</span></div><div class="es-branch"><strong>Recurring operations</strong><span>Streams → archetypes → episodes</span></div></div>
-<div class="es-artifacts"><div class="es-mini-label">ACTIVITY-GROUNDED ARTIFACTS</div><strong>Shared facts,<br> different systems</strong><span>Slack · Jira · Email ·<br> Salesforce · +8 sources</span></div>
+ENTERPRISE = '''<figure class="saga-figure" aria-label="EnterpriseSaga construction: shared history, activity-grounded records, questions and evidence, followed by question-conditioned augmentation">
+<div class="saga-scale">18 months <span>·</span> 12 systems <span>·</span> 1.213B tokens</div>
+<div class="saga-history"><strong>One shared company history</strong><p>People, business objectives, and changes over time</p></div>
+<div class="saga-activities">
+<div><strong>Projects</strong><span>Projects → subprojects → episodes</span></div>
+<div><strong>Recurring operations</strong><span>Streams → archetypes → episodes</span></div>
 </div>
-<div class="es-framework-heading es-qa-heading"><span>02</span><strong>Build questions with traceable evidence</strong></div>
-<div class="es-qa-grid">
-<div class="es-question-design"><div class="es-qa-type"><span>Multi-hop</span><div class="es-path" aria-label="One result identifies the next evidence"><i>A</i><b>→</b><i>B</i><b>→</b><i>C</i></div><small>Each result identifies the next evidence.</small></div><div class="es-qa-type"><span>Synthesis</span><div class="es-merge" aria-label="Combine complementary facts"><i>A</i><b>+</b><i>B</i><b>+</b><i>C</i><b>→</b><i>Answer</i></div><small>Combine facts within one business scope.</small></div></div>
-<div class="es-grounding"><div class="es-mini-label">VERIFIED SUPPORT</div><strong>Question ↔ claims ↔ files</strong><ul><li>Reference answers &amp; answer subfacts</li><li>Alternative sufficient evidence sets</li><li>Scoped search &amp; support verification</li></ul></div>
-</div>
-<div class="es-refinement"><span aria-hidden="true">↺</span><div><strong>Question-conditioned refinement</strong><p>Add comparable activities with different dates, versions, or participants. Check conflicts and unintended support; update evidence annotations.</p></div></div>
-</div>'''
+<svg class="saga-join" viewBox="0 0 480 32" preserveAspectRatio="none" aria-hidden="true"><path d="M120 1V14Q120 18 124 18H356Q360 18 360 14V1M240 18V30M236 26L240 30L244 26"/></svg>
+<div class="saga-records"><strong>Shared facts, different records</strong><div class="saga-sources"><span>Slack</span><span>Jira</span><span>Email</span><span>Salesforce</span><span class="saga-other">+8 systems</span></div></div>
+<div class="saga-down" aria-hidden="true">↓</div>
+<div class="saga-questions"><strong>966 questions with traceable evidence</strong><div class="saga-question-types"><div><b>Multi-hop</b><span>Follow evidence from one record to the next.</span></div><div><b>Synthesis</b><span>Combine complementary facts within a shared scope.</span></div></div><p class="saga-support">Reference answers and claims linked to supporting files,<br>including alternative sufficient evidence sets.</p></div>
+<figcaption class="saga-augmentation"><strong>Question-conditioned augmentation</strong><p>Add comparable activities with different dates, versions, or participants; recheck conflicts and unintended support, then update the evidence annotations.</p></figcaption>
+</figure>'''
 
 def rcml_figure(baseline=False):
     # Figure 1's fixed-vs-conditioned contrast, with Figure 2(a)'s product photos.
