@@ -364,3 +364,70 @@ footer{font:12px/1.7 var(--sans)}
  .saga-sources{gap:6px 12px}.saga-sources>span:not(.saga-other)::before{display:none}
  .saga-activities span{font-size:10px}.saga-across{font-size:18px}
 }
+
+/* Tighter reading rhythm; retain readable text and complete research figures. */
+main{padding-top:36px}
+.hero{gap:40px;padding-bottom:18px;grid-template-columns:minmax(0,1fr) 145px}
+.hero h1{margin-bottom:16px}
+.portrait-frame{width:145px;height:181px}
+.hero-links{margin-top:15px}
+.availability{margin-top:12px}
+.page-links{padding-bottom:13px;gap:10px 24px}
+section{padding:22px 0}
+.section-heading{margin-bottom:16px}
+.research-direction{margin-bottom:12px}
+.research-group+.research-group{margin-top:24px;padding-top:18px}
+.research-card,.research-lead{gap:24px;margin-bottom:24px}
+.research-card:last-child{margin-bottom:0}
+.research-card .card-copy .paper-subtitle{margin-bottom:12px}
+.research-card .partner{margin:12px 0 8px}
+.research-card>.molworld-panel,.research-card>.relation-panel{padding:13px 14px}
+.xai-card,.milnet-card{padding-top:18px}
+.publication{padding:10px 0}
+.pub-title{margin-bottom:3px}
+.authors{margin-bottom:4px}
+.timeline-row{margin-bottom:12px}
+.academic-details{gap:36px}
+.academic-details section{padding:22px 0 16px}
+.academic-details .section-heading{margin-bottom:11px}
+footer{padding-top:18px}
+@media(min-width:901px){
+ .rcml-card{grid-template-columns:minmax(0,.94fr) minmax(0,1.06fr)}
+ .milnet-card{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}
+ .rcml-card .card-copy,.milnet-card .card-copy{align-self:center}
+ .embedding-space{max-height:205px}
+ .embedding-comparison{gap:10px;margin-top:10px}
+ .embedding-panel{padding:9px 7px}
+ .embedding-panel-heading{gap:2px}
+ .embedding-summary{gap:2px}
+ .embedding-distances{margin-top:6px;padding-top:4px}
+ .relation-question{margin-top:10px}
+ .relation-explanation{margin-top:8px}
+ .milnet-views>div{padding:8px}
+ .milnet-gate{padding:8px 0 10px}
+ .milnet-view-caption{margin-top:7px}
+ .milnet-results caption{margin:9px 0 6px}
+ .milnet-results .milnet-case{height:116px;aspect-ratio:auto}
+ .milnet-results thead th{padding-bottom:7px}
+ .milnet-results tbody th,.milnet-results td{padding-top:6px;padding-bottom:6px}
+ .milnet-evidence{margin-top:9px;padding-top:7px}
+}
+@media(max-width:900px){
+ main{padding-top:28px}
+ .hero{gap:24px;grid-template-columns:minmax(0,1fr) 125px}
+ .portrait-frame{width:125px;height:160px}
+ .research-card{gap:15px}
+ .research-group+.research-group{margin-top:22px;padding-top:16px}
+}
+@media(max-width:540px){
+ main{padding-top:22px}
+ .hero{grid-template-columns:minmax(0,1fr) 82px;gap:12px;padding-bottom:17px}
+ .portrait-frame{width:82px;height:106px}
+ .hero h1{margin:5px 0 0}
+ .hero-links{margin-top:14px}
+ .page-links{gap:10px 19px;padding-bottom:12px}
+ section{padding:20px 0}
+ .academic-details{gap:0}
+ .academic-details section{padding:18px 0 0}
+ .academic-details{padding-bottom:18px}
+}
