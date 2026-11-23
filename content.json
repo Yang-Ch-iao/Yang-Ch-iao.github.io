@@ -24,18 +24,18 @@
     {
       "title": "Profile-Conditioned Latent Dynamics for Human Behavior Simulation",
       "authors": "Ziyuan Qin, **Yang Qiao**, Summer B. Frandsen, Michael T. Treadway, and Liang Zhao.",
-      "status": "Manuscript.",
-      "url": null,
+      "status": "KDD 2027, AI for Sciences Track, accepted.",
+      "url": "https://openreview.net/forum?id=x7TLjbCHvS",
       "category": "science",
-      "venue": "Manuscript"
+      "venue": "KDD 2027"
     },
     {
       "title": "XAI-Refine: An Automated Explanation-Knowledge Loop for Brain-Age Prediction",
       "authors": "**Yang Qiao**, Junjie Wu, Deqiang Qiu, James J. Lah, and Liang Zhao.",
-      "status": "arXiv:2609.09388, 2026.",
-      "url": "https://arxiv.org/abs/2609.09388",
+      "status": "KDD 2027, AI for Sciences Track, accepted.",
+      "url": "https://openreview.net/forum?id=7EyIJHSt2d",
       "category": "science",
-      "venue": "arXiv 2026"
+      "venue": "KDD 2027"
     },
     {
       "title": "MolWorld: Molecule World Models for Actionable Molecular Optimization",

@@ -27,7 +27,7 @@ Open http://127.0.0.1:8765/ in a browser.
 
 ## Publication status
 
-EnterpriseSaga and Profile-Conditioned Latent Dynamics are listed as manuscripts. Add an arXiv URL to `content.json` once it is public. MMPT-RAG is listed as accepted in Findings of EMNLP 2026; its link is intentionally empty until the public version contains the correct author list.
+EnterpriseSaga is listed as a manuscript. Add an arXiv URL to `content.json` once it is public. XAI-Refine and Profile-Conditioned Latent Dynamics are accepted at KDD 2027, AI for Sciences Track, and link to their OpenReview pages. MMPT-RAG is listed as accepted in Findings of EMNLP 2026; its link is intentionally empty until the public version contains the correct author list.
 
 ## Interaction notes
 
