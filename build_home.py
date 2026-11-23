@@ -16,7 +16,7 @@ def pub_html(p):
     authors = ''.join(('<strong>' + esc(t) + '</strong>') if i % 2 else esc(t) for i,t in enumerate(p['authors'].split('**')))
     links = ''
     if p['title'].startswith('EnterpriseSaga'): links = external('Project & leaderboard',data['enterprise'])
-    status = f'<p class="pub-status">Accepted · {esc(p["status"].removesuffix(", accepted.").replace(", ", " · "))}</p>' if 'accepted' in p['status'] else ''
+    status = ''
     if 'revised' in p['status']:
         year = p['status'].split('revised ')[1].strip('.')
         status = f'<p class="pub-status">Revised {esc(year)}</p>'

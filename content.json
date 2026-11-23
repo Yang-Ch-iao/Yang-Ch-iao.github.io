@@ -16,15 +16,15 @@
     {
       "title": "Retrieval-Augmented Language Models for Matched Molecular Pair Transformations to Recapitulate Medicinal Chemistry Intuition",
       "authors": "Bo Pan, **Yang Qiao**, Peter Zhiping Zhang, Hao-Wei Pang, Alex Zhu, Xiang Yu, Liying Zhang, and Liang Zhao.",
-      "status": "Findings of EMNLP 2026, accepted.",
+      "status": "Findings of the Association for Computational Linguistics: EMNLP 2026.",
       "url": null,
       "category": "science",
-      "venue": "EMNLP 2026"
+      "venue": "Findings of EMNLP 2026"
     },
     {
       "title": "Profile-Conditioned Latent Dynamics for Human Behavior Simulation",
       "authors": "Ziyuan Qin, **Yang Qiao**, Summer B. Frandsen, Michael T. Treadway, and Liang Zhao.",
-      "status": "KDD 2027, accepted.",
+      "status": "ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD), 2027.",
       "url": "https://openreview.net/forum?id=x7TLjbCHvS",
       "category": "science",
       "venue": "KDD 2027"
@@ -32,7 +32,7 @@
     {
       "title": "XAI-Refine: An Automated Explanation-Knowledge Loop for Brain-Age Prediction",
       "authors": "**Yang Qiao**, Junjie Wu, Deqiang Qiu, James J. Lah, and Liang Zhao.",
-      "status": "KDD 2027, accepted.",
+      "status": "ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD), 2027.",
       "url": "https://openreview.net/forum?id=7EyIJHSt2d",
       "category": "science",
       "venue": "KDD 2027"
