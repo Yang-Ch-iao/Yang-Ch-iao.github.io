@@ -27,7 +27,7 @@ Open http://127.0.0.1:8765/ in a browser.
 
 ## Publication status
 
-EnterpriseSaga is listed as a manuscript. Add an arXiv URL to `content.json` once it is public. XAI-Refine and Profile-Conditioned Latent Dynamics are accepted at KDD 2027, and link to their OpenReview pages. MMPT-RAG is listed as accepted in Findings of EMNLP 2026; its link is intentionally empty until the public version contains the correct author list.
+EnterpriseSaga is listed as a preprint. Add an arXiv URL to `content.json` once it is public. XAI-Refine and Profile-Conditioned Latent Dynamics are accepted at KDD 2027, and link to their OpenReview pages. MMPT-RAG is listed as accepted in Findings of EMNLP 2026; its link is intentionally empty until the public version contains the correct author list.
 
 ## Interaction notes
 
@@ -64,3 +64,5 @@ The homepage uses a centered reading column with a short, non-sticky row of sect
 EnterpriseSaga and MolWorld receive larger project titles and fuller introductions. XAI-Refine, RCML and MILNet retain their core methods and complete interactive figures in more compact entries. The biography now describes recent work directly and links to the corresponding projects; no new research claims or personal history were introduced.
 
 EnterpriseSaga now uses an open, continuous construction figure rather than nested dashboard cards: a common company history branches into project and recurring-operation episodes, merges into activity-grounded records, and supports multi-hop/synthesis questions with traceable evidence. Question-conditioned augmentation and verification remain explicit. Scale is shown as a quiet text line. Other research explanations and animations are unchanged. Linked publication titles replace redundant Paper links, and teaching/reviewing share a compact closing row on desktop.
+
+CV variants are built with `work/build_cv_focused.py` in the parent workspace: the default omits Academic Service; `--with-service` includes it. The homepage CV download uses the default. Publication categories remain research directions, with first-author AI for Science work listed first. Unpublished papers use a Preprint label without arXiv IDs or revision history.

@@ -1,7 +1,7 @@
 'use strict';
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const filters=[...document.querySelectorAll('.filter')];
-filters.forEach(button=>button.addEventListener('click',()=>{const category=button.dataset.filter;let count=0;filters.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));document.querySelectorAll('.publication').forEach(p=>{p.hidden=category!=='all'&&p.dataset.category!==category;if(!p.hidden)count++;});document.getElementById('publication-count').textContent=`${count} publications and manuscripts`; }));
+filters.forEach(button=>button.addEventListener('click',()=>{const category=button.dataset.filter;let count=0;filters.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));document.querySelectorAll('.publication').forEach(p=>{p.hidden=category!=='all'&&p.dataset.category!==category;if(!p.hidden)count++;});document.getElementById('publication-count').textContent=`${count} publications and preprints`; }));
 
 // Three schematic generation rounds, following MolWorld Section 3.2.
 // Context conditioning does not prescribe a parent or an edge for a candidate.
